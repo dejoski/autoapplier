@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ThemeToggleButton from '@/components/ui/ThemeToggleButton'
 
 interface ContentTemplate {
