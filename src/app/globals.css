@@ -4,72 +4,75 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* White */
-    --foreground: 224 71.4% 4.1%; /* Dark Blue - Main Text */
+    --background: 210 40% 98%;
+    --foreground: 220 15% 25%;
 
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 224 71.4% 4.1%; /* Dark Blue */
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 25%;
 
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 224 71.4% 4.1%; /* Dark Blue */
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 25%;
 
-    --primary: 218 81.2% 60.4%; /* Vivid Blue - Primary Action */
-    --primary-foreground: 0 0% 100%; /* White - Text on Primary */
+    --primary: 170 70% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14.3% 95.9%; /* Light Gray - Secondary Background */
-    --secondary-foreground: 224 71.4% 4.1%; /* Dark Blue - Text on Secondary */
+    --secondary: 170 50% 75%;
+    --secondary-foreground: 170 70% 25%;
 
-    --muted: 220 14.3% 95.9%; /* Light Gray */
-    --muted-foreground: 220 8.9% 43.1%; /* Medium Gray - Muted Text */
+    --muted: 210 30% 90%;
+    --muted-foreground: 210 20% 55%;
 
-    --accent: 260 75% 55%; /* Vibrant Purple - Accent for highlights, slightly desaturated */
-    --accent-foreground: 0 0% 100%; /* White - Text on Accent */
+    --accent: 30 100% 55%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%; /* Red - Destructive Actions */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%; /* Light Gray - Borders */
-    --input: 220 13% 91%; /* Light Gray - Input Borders */
-    --ring: 218 81.2% 60.4%; /* Vivid Blue - Focus Ring */
+    --border: 210 30% 85%;
+    --input: 210 30% 88%;
+    --ring: 170 70% 45%;
 
     --radius: 0.5rem;
     
-    /* Gradient colors - refined for subtlety and modernity */
-    --gradient-start: 218 81% 60%; /* Vivid Blue */
-    --gradient-middle: 260 85% 65%; /* Vibrant Purple */
-    --gradient-end: 300 90% 60%; /* Magenta/Pinkish */
+    /* Gradient colors - DebugDaily theme */
+    --gradient-start: 170 70% 45%; /* Primary Teal */
+    --gradient-middle: 30 100% 55%; /* Accent Orange */
+    --gradient-end: 30 100% 65%; /* Lighter Accent Orange */
   }
 
   .dark {
-    --background: 222 47.4% 11.2%; /* Dark Slate Gray - Softer than pure black */
-    --foreground: 210 40% 98%;     /* Almost White - High contrast for readability */
+    --background: 220 25% 10%;
+    --foreground: 210 30% 88%;
 
-    --card: 222 47.4% 14.2%;       /* Slightly Lighter Slate Gray - Card Background */
-    --card-foreground: 210 40% 98%;
+    --card: 220 25% 15%;
+    --card-foreground: 210 30% 88%;
 
-    --popover: 222 47.4% 14.2%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 25% 15%;
+    --popover-foreground: 210 30% 88%;
 
-    /* Primary action color can remain vibrant but ensure its usage is not overwhelming */
-    --primary: 218 71.2% 60.4%;   /* Slightly less saturated blue for dark mode */
-    --primary-foreground: 210 40% 98%; /* Ensure text on primary is light */
+    --primary: 170 65% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 222 47.4% 18.2%;   /* Darker Slate - Secondary elements */
-    --secondary-foreground: 210 40% 96%; /* Lighter text for secondary elements */
+    --secondary: 170 45% 30%;
+    --secondary-foreground: 170 60% 80%;
 
-    --muted: 222 47.4% 22.2%;      /* Medium Slate - Muted backgrounds/borders */
-    --muted-foreground: 210 38% 80%;  /* Lighter Gray - Muted text */
+    --muted: 220 15% 25%;
+    --muted-foreground: 210 25% 70%;
 
-    /* Accent color needs to pop but not clash */
-    --accent: 260 75% 65%;        /* Brighter Purple for Dark Mode accent */
-    --accent-foreground: 210 40% 98%; /* Text on accent */
+    --accent: 30 100% 60%;
+    --accent-foreground: 0 0% 10%;
 
-    --destructive: 0 62.8% 50.6%; /* Darker Red */
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 222 47.4% 22.2%;      /* Medium Slate - Borders */
-    --input: 222 47.4% 18.2%;       /* Darker Slate - Input Backgrounds */
-    --ring: 218 71.2% 65.4%;     /* Brighter Blue for focus ring */
+    --border: 220 15% 20%;
+    --input: 220 15% 22%;
+    --ring: 170 65% 50%;
+
+    /* Gradient colors - DebugDaily theme dark */
+    --gradient-start: 170 65% 50%; /* Primary Teal Dark */
+    --gradient-middle: 30 100% 60%; /* Accent Orange Dark */
+    --gradient-end: 30 100% 70%; /* Lighter Accent Orange Dark */
   }
 }
 
