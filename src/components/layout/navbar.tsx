@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { User, Github, Mail, Moon, Sun } from 'lucide-react'
+import { User, Github, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 
