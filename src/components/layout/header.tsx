@@ -30,38 +30,47 @@ export function Header() {
     if (href === '/') {
       return pathname === href
     }
+    // For hash links, check if the pathname (without hash) is '/' and the hash matches
+    if (href.startsWith('#')) {
+      return pathname === '/' && window.location.hash === href;
+    }
     return pathname.startsWith(href)
   }
 
+  // Effect to close mobile menu on route change if needed, though individual clicks handle it too
+  React.useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur-lg border-b border-border shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-            <Code2 className="h-5 w-5" />
+        <Link href="/" className="flex items-center space-x-2 group" onClick={() => setMobileMenuOpen(false)}>
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+            <Code2 className="h-4 w-4" />
           </div>
-          <span className="hidden font-bold text-gray-900 sm:inline-block group-hover:text-blue-600 transition-all duration-300">
+          <span className="hidden font-bold text-foreground sm:inline-block group-hover:text-accent transition-colors duration-300">
             Dejan Stajic
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex md:items-center md:space-x-8">
+        <nav className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               className={cn(
-                'text-sm font-medium transition-all duration-300 hover:text-blue-600 relative group',
+                'text-sm font-medium transition-colors duration-200 hover:text-accent relative group',
                 isActive(item.href)
-                  ? 'text-blue-600'
-                  : 'text-gray-600'
+                  ? 'text-accent'
+                  : 'text-muted-foreground'
               )}
             >
               {item.name}
               <span className={cn(
-                'absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300',
+                'absolute -bottom-0.5 left-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300',
                 isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
               )} />
             </Link>
@@ -69,21 +78,21 @@ export function Header() {
           
           {/* Projects Dropdown */}
           <div className="relative group">
-            <button className="text-sm font-medium text-gray-600 transition-all duration-300 hover:text-blue-600 flex items-center space-x-1">
-              <span>Projects</span>
+            <button className="text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-accent flex items-center space-x-1">
+              <span>More</span> 
               <ExternalLink className="h-3 w-3" />
             </button>
-            <div className="absolute top-full left-0 mt-2 w-64 rounded-xl bg-white border border-gray-200 p-2 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            <div className="absolute top-full right-0 mt-2 w-64 rounded-xl bg-background border border-border p-2 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-10">
               {projects.map((project) => (
                 <Link
                   key={project.name}
                   href={project.href}
-                  className="block rounded-lg px-4 py-3 text-sm hover:bg-gray-50 transition-all duration-300 group/item"
+                  className="block rounded-md px-4 py-3 text-sm hover:bg-secondary transition-colors duration-200 group/item"
                 >
-                  <div className="font-medium text-gray-900 group-hover/item:text-blue-600 transition-colors">
+                  <div className="font-medium text-foreground group-hover/item:text-accent transition-colors">
                     {project.name}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">
+                  <div className="text-xs text-muted-foreground mt-0.5">
                     {project.description}
                   </div>
                 </Link>
@@ -94,31 +103,33 @@ export function Header() {
 
         {/* Mobile menu button */}
         <Button
-          className="md:hidden w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-600"
+          variant="outline"
+          size="icon"
+          className="md:hidden w-9 h-9 bg-background hover:bg-secondary text-muted-foreground border-border/80"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           {mobileMenuOpen ? (
             <X className="h-5 w-5" />
           ) : (
             <Menu className="h-5 w-5" />
           )}
-          <span className="sr-only">Toggle menu</span>
         </Button>
       </div>
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
-          <div className="space-y-1 px-4 pb-4 pt-2">
+        <div className="md:hidden bg-background border-t border-border shadow-lg">
+          <div className="space-y-1 px-3 py-3">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  'block rounded-lg px-4 py-3 text-base font-medium transition-all duration-300',
+                  'block rounded-md px-3 py-3 text-base font-medium transition-colors duration-200',
                   isActive(item.href)
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
+                    ? 'bg-accent/10 text-accent' 
+                    : 'text-muted-foreground hover:bg-secondary hover:text-primary'
                 )}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -127,17 +138,17 @@ export function Header() {
             ))}
             
             {/* Mobile Projects */}
-            <div className="px-4 py-2">
-              <div className="text-base font-medium text-gray-600 mb-3">Projects</div>
+            <div className="px-3 pt-3">
+              <div className="text-sm font-semibold text-foreground mb-2">More Projects</div>
               {projects.map((project) => (
                 <Link
                   key={project.name}
                   href={project.href}
-                  className="block rounded-lg px-4 py-3 text-sm hover:bg-gray-50 transition-all duration-300"
+                  className="block rounded-md px-3 py-3 text-sm hover:bg-secondary transition-colors duration-200"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <div className="font-medium text-gray-900">{project.name}</div>
-                  <div className="text-xs text-gray-500 mt-1">{project.description}</div>
+                  <div className="font-medium text-muted-foreground hover:text-primary">{project.name}</div>
+                  <div className="text-xs text-muted-foreground/80 mt-0.5">{project.description}</div>
                 </Link>
               ))}
             </div>

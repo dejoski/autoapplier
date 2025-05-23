@@ -3,3 +3,18 @@ description:
 globs:
 alwaysApply: false
 ---
+# Pending Feature Implementation Guide
+
+This project has several UI components and features that have been designed but require functional implementation (e.g., button actions, form submissions, linking to actual content or pages).
+
+A detailed checklist of all pending features and their corresponding components is maintained in [TODO_FEATURES.md](mdc:TODO_FEATURES.md).
+
+Key components with pending functionalities include:
+
+-   **Header**: Navigation and project dropdown links in [src/components/layout/header.tsx](mdc:src/components/layout/header.tsx)
+-   **Footer**: Navigation and project links in [src/components/layout/footer.tsx](mdc:src/components/layout/footer.tsx)
+-   **Hero Section**: Call-to-action buttons (Get In Touch, Download CV) and social links in [src/components/sections/hero-section.tsx](mdc:src/components/sections/hero-section.tsx)
+-   **Projects Section**: Live demo and GitHub links for each project in [src/components/sections/projects-section.tsx](mdc:src/components/sections/projects-section.tsx)
+-   **Contact Section**: Form submission logic in [src/components/sections/contact-section.tsx](mdc:src/components/sections/contact-section.tsx)
+
+Always refer to [TODO_FEATURES.md](mdc:TODO_FEATURES.md) for the most up-to-date list of pending tasks before working on new features or refactoring existing ones.
