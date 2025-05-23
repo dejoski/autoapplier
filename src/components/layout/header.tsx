@@ -24,7 +24,25 @@ const projects = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  const [currentHash, setCurrentHash] = React.useState('')
   const pathname = usePathname()
+
+  // Track hash changes on client side only
+  React.useEffect(() => {
+    const updateHash = () => {
+      setCurrentHash(window.location.hash)
+    }
+    
+    // Set initial hash
+    updateHash()
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', updateHash)
+    
+    return () => {
+      window.removeEventListener('hashchange', updateHash)
+    }
+  }, [])
 
   const isActive = (href: string) => {
     if (href === '/') {
@@ -32,7 +50,7 @@ export function Header() {
     }
     // For hash links, check if the pathname (without hash) is '/' and the hash matches
     if (href.startsWith('#')) {
-      return pathname === '/' && window.location.hash === href;
+      return pathname === '/' && currentHash === href;
     }
     return pathname.startsWith(href)
   }

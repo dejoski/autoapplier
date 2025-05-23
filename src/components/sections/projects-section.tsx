@@ -61,6 +61,12 @@ const projects = [
 export function ProjectsSection() {
   const [showLivePreviews, setShowLivePreviews] = useState(true)
   const [loadedIframes, setLoadedIframes] = useState<Set<string>>(new Set())
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Ensure we only render iframes on the client side
+  React.useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -142,7 +148,7 @@ export function ProjectsSection() {
               <Card className="h-full bg-card shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border-border group">
                 <CardHeader className="p-0">
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-secondary">
-                    {showLivePreviews ? (
+                    {showLivePreviews && isMounted ? (
                       <>
                         {/* Loading indicator */}
                         {!loadedIframes.has(project.id) && (
