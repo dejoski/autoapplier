@@ -8,8 +8,8 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 export const metadata: Metadata = {
-  title: 'DebugDaily - AI Coding Challenges',
-  description: 'Sharpen your AI coding skills with daily challenges and insights. Platform for practicing AI-related coding problems.',
+  title: 'Dejan Stajic - Full Stack Developer',
+  description: 'Full Stack Developer & AI Enthusiast building modern web applications',
 }
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="flex-grow">
+          <main className="min-h-screen">
             {children}
           </main>
           <Footer />

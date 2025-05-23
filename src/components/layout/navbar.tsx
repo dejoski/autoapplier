@@ -1,40 +1,77 @@
 'use client'
 
 import Link from 'next/link'
-import { BrainCircuit } from 'lucide-react' // Using BrainCircuit for AI/logo
+import { User, Github, Mail, Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { Button } from '@/components/ui/button'
 
 export function Navbar() {
+  const { theme, setTheme } = useTheme()
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center">
-        <Link href="/" className="mr-6 flex items-center space-x-2">
-          <BrainCircuit className="h-6 w-6 text-primary" />
-          <span className="font-bold sm:inline-block">
-            DebugDaily
+      <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4">
+        <Link href="/" className="flex items-center space-x-2 group">
+          <User className="h-6 w-6 text-primary group-hover:text-accent transition-colors" />
+          <span className="font-bold text-lg group-hover:text-accent transition-colors">
+            Dejan Stajic
           </span>
         </Link>
-        <nav className="flex items-center gap-4 text-sm lg:gap-6">
+        
+        <nav className="hidden md:flex items-center gap-6 text-sm">
           <Link
-            href="/challenges"
-            className="text-foreground/60 transition-colors hover:text-foreground/80"
-          >
-            Challenges
-          </Link>
-          <Link
-            href="/leaderboard"
-            className="text-foreground/60 transition-colors hover:text-foreground/80"
-          >
-            Leaderboard
-          </Link>
-          <Link
-            href="/about"
-            className="text-foreground/60 transition-colors hover:text-foreground/80"
+            href="#about"
+            className="text-foreground/60 hover:text-foreground transition-colors"
           >
             About
           </Link>
+          <Link
+            href="#projects"
+            className="text-foreground/60 hover:text-foreground transition-colors"
+          >
+            Projects
+          </Link>
+          <Link
+            href="#experience"
+            className="text-foreground/60 hover:text-foreground transition-colors"
+          >
+            Experience
+          </Link>
+          <Link
+            href="#contact"
+            className="text-foreground/60 hover:text-foreground transition-colors"
+          >
+            Contact
+          </Link>
         </nav>
-        <div className="flex flex-1 items-center justify-end space-x-2">
-          {/* TODO: Theme toggle and Auth buttons */}
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            className="h-9 w-9"
+          >
+            <a
+              href="https://github.com/dejoski"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="h-9 w-9"
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
         </div>
       </div>
     </header>
