@@ -125,7 +125,6 @@ export default function BlogPage() {
   })
 
   const featuredPosts = blogPosts.filter(post => post.featured)
-  const recentPosts = blogPosts.slice(0, 3)
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
