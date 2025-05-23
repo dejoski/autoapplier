@@ -170,7 +170,7 @@ Recent developments in ${topic} have created new opportunities that align perfec
 • Opportunity to stay ahead of industry trends
 
 **Next Steps:**
-I'd love to schedule a brief call to discuss how ${topic} could benefit your specific situation. Would you be available for a 15-minute conversation this week?
+I'd love to schedule a brief ${tone} conversation to discuss how ${topic} could benefit your specific situation. Would you be available for a 15-minute discussion this week?
 
 Please let me know what works best for your schedule.
 

@@ -8,8 +8,15 @@ interface Challenge {
   description: string
   starterCode: string
   solution: string
-  testCases: Array<{ input: any; expected: any }>
+  testCases: Array<{ input: unknown; expected: unknown }>
   difficulty: 'Easy' | 'Medium' | 'Hard'
+}
+
+interface TestResult {
+  passed: boolean
+  input: unknown
+  expected: unknown
+  actual: unknown
 }
 
 const challenges: Challenge[] = [
@@ -74,41 +81,26 @@ export default function DebugDailyPage() {
   const [currentChallenge, setCurrentChallenge] = useState<Challenge>(challenges[0])
   const [userCode, setUserCode] = useState<string>(currentChallenge.starterCode)
   const [output, setOutput] = useState<string>('')
-  const [showHint, setShowHint] = useState<boolean>(false)
-  const [testResults, setTestResults] = useState<Array<{ passed: boolean; input: any; expected: any; actual: any }>>([])
+  const [testResults, setTestResults] = useState<TestResult[]>([])
   const [streak, setStreak] = useState<number>(0)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     setUserCode(currentChallenge.starterCode)
     setOutput('')
-    setShowHint(false)
     setTestResults([])
   }, [currentChallenge])
 
   const executeCode = () => {
     setIsLoading(true)
     try {
-      // Create a safe execution environment
-      const results: Array<{ passed: boolean; input: any; expected: any; actual: any }> = []
-      
-      // Wrap user code in a try-catch and test it
-      const wrappedCode = `
-        ${userCode}
-        
-        // Test function exists
-        if (typeof ${currentChallenge.starterCode.match(/function (\w+)/)?.[1]} === 'undefined') {
-          throw new Error('Function not found');
-        }
-      `
-      
-      // Execute the code safely
-      const func = new Function('return ' + wrappedCode)()
+      const results: TestResult[] = []
       const functionName = currentChallenge.starterCode.match(/function (\w+)/)?.[1]
       
       if (functionName) {
         currentChallenge.testCases.forEach(testCase => {
           try {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const actual = eval(`${userCode}; ${functionName}(${JSON.stringify(testCase.input)})`)
             const passed = JSON.stringify(actual) === JSON.stringify(testCase.expected)
             results.push({
@@ -147,7 +139,6 @@ export default function DebugDailyPage() {
 
   const getAIHint = async () => {
     setIsLoading(true)
-    setShowHint(true)
     
     // Simulate AI hint generation (in real app, this would call OpenAI API)
     setTimeout(() => {

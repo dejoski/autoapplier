@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 interface Product {
   id: string
@@ -351,7 +352,6 @@ export default function WebAppsPage() {
       {/* Checkout Modal */}
       {showCheckout && (
         <CheckoutModal
-          cart={cart}
           total={getTotalPrice()}
           onClose={() => setShowCheckout(false)}
           onComplete={() => {
@@ -391,10 +391,11 @@ function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: 
             <span className="text-white font-bold text-lg">OUT OF STOCK</span>
           </div>
         )}
-        <img 
+        <Image 
           src={product.image} 
           alt={product.name} 
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
       
@@ -462,7 +463,7 @@ function CartItemComponent({
 }) {
   return (
     <div className="flex items-center space-x-3 bg-slate-800 p-3 rounded-lg">
-      <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
+      <Image src={item.image} alt={item.name} width={64} height={64} className="object-cover rounded" />
       <div className="flex-grow">
         <h4 className="font-medium">{item.name}</h4>
         <p className="text-sm text-gray-400">{item.selectedColor}</p>
@@ -495,12 +496,10 @@ function CartItemComponent({
 
 // Checkout Modal Component
 function CheckoutModal({ 
-  cart, 
   total, 
   onClose, 
   onComplete 
 }: { 
-  cart: CartItem[]
   total: number
   onClose: () => void
   onComplete: () => void
