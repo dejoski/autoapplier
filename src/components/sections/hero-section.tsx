@@ -159,7 +159,7 @@ export function HeroSection() {
               </a>
             </Button>
              <Button asChild variant="outline" size="lg" className="border-primary/30 text-muted-foreground hover:bg-secondary hover:text-primary font-semibold shadow-sm">
-              <a href="/Dejan_Stajic_CV.pdf" download>
+              <a href="/Dejan_Stajic_Resume.pdf" download>
                 <Download className="mr-2 h-4 w-4" />
                 Download CV
               </a>

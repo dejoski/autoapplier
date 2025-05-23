@@ -3,7 +3,7 @@
 This file tracks all the features and functionalities in the portfolio website that are currently placeholders or require backend logic to be fully operational.
 
 ## Global
-- [ ] **CV Document**: Add a CV document (e.g., `public/Dejan_Stajic_CV.pdf`) for the "Download CV" button.
+- [x] **CV Document**: Add a CV document (e.g., `public/Dejan_Stajic_Resume.pdf`) for the "Download CV" button. (Implemented: `public/Dejan_Stajic_Resume.pdf`)
 - [ ] **Social Media Links**: Verify all social media URLs (GitHub, LinkedIn, Twitter/X, Mail) are correct in all sections (Hero, Contact, Footer).
 - [ ] **Project Pages/Links**: The project links in the Header, Footer, and Projects section currently point to relative paths (e.g., `/debugdaily`). These pages need to be created, or the links should point to external URLs or be removed if not applicable.
 
