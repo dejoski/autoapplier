@@ -26,88 +26,170 @@ interface CartItem extends Product {
 const allProducts: Product[] = [
   {
     id: '1',
-    name: 'Premium Wireless Headphones',
-    description: 'Experience immersive sound with our noise-cancelling headphones featuring 30-hour battery life.',
-    price: 199.99,
-    originalPrice: 249.99,
-    image: 'https://via.placeholder.com/300x300.png?text=Headphones',
-    colors: ['Black', 'White', 'Blue'],
+    name: 'Sony WH-1000XM5 Wireless Headphones',
+    description: 'Industry-leading noise canceling with crystal clear hands-free calling. 30-hour battery life with quick charge.',
+    price: 348.00,
+    originalPrice: 399.99,
+    image: 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=300&h=300&fit=crop&q=80',
+    colors: ['Midnight Black', 'Smoky Pink'],
     category: 'Audio',
     rating: 4.8,
-    reviews: 1247,
+    reviews: 15847,
     inStock: true,
     featured: true
   },
   {
     id: '2',
-    name: 'Smart Fitness Tracker',
-    description: 'Monitor your health and fitness goals with this sleek tracker featuring heart rate monitoring.',
-    price: 79.50,
-    image: 'https://via.placeholder.com/300x300.png?text=Fitness+Tracker',
-    colors: ['Black', 'Pink', 'Teal'],
+    name: 'Samsung Galaxy Watch6 Classic',
+    description: 'Premium smartwatch with rotating bezel, advanced health monitoring, and all-day battery life.',
+    price: 329.99,
+    originalPrice: 399.99,
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop&q=80',
+    colors: ['Graphite', 'Silver'],
     category: 'Wearables',
     rating: 4.6,
-    reviews: 892,
+    reviews: 8234,
     inStock: true,
     featured: true
   },
   {
     id: '3',
-    name: 'Ergonomic Office Chair',
-    description: 'Stay comfortable and productive with our ergonomic chair featuring lumbar support.',
-    price: 249.00,
-    originalPrice: 299.00,
-    image: 'https://via.placeholder.com/300x300.png?text=Office+Chair',
-    colors: ['Gray', 'Black'],
-    category: 'Furniture',
-    rating: 4.7,
-    reviews: 543,
+    name: 'Samsung Galaxy S24 Ultra',
+    description: '200MP camera, S Pen included, Titanium build, 6.8" Dynamic AMOLED display with 120Hz refresh rate.',
+    price: 1199.99,
+    originalPrice: 1299.99,
+    image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=300&h=300&fit=crop&q=80',
+    colors: ['Titanium Black', 'Titanium Gray', 'Titanium Violet'],
+    category: 'Electronics',
+    rating: 4.9,
+    reviews: 12456,
     inStock: true,
-    featured: false
+    featured: true
   },
   {
     id: '4',
-    name: 'Ultra HD 4K Monitor',
-    description: 'Crisp visuals for work and play on this stunning 27-inch 4K display with HDR support.',
-    price: 399.00,
-    image: 'https://via.placeholder.com/300x300.png?text=4K+Monitor',
-    colors: ['Black'],
+    name: 'Apple iPhone 15 Pro Max',
+    description: 'Titanium design, A17 Pro chip, 5x Telephoto camera, and Action Button. Available in 256GB, 512GB, and 1TB.',
+    price: 1199.00,
+    image: 'https://images.unsplash.com/photo-1696446700206-318470652bb2?w=300&h=300&fit=crop&q=80',
+    colors: ['Natural Titanium', 'Blue Titanium', 'White Titanium', 'Black Titanium'],
     category: 'Electronics',
-    rating: 4.9,
-    reviews: 2156,
+    rating: 4.8,
+    reviews: 18934,
     inStock: true,
     featured: true
   },
   {
     id: '5',
-    name: 'Mechanical Gaming Keyboard',
-    description: 'RGB backlit mechanical keyboard with tactile switches for the ultimate gaming experience.',
-    price: 129.99,
-    image: 'https://via.placeholder.com/300x300.png?text=Gaming+Keyboard',
-    colors: ['Black', 'White'],
+    name: 'Sony WH-1000XM6 Wireless Headphones',
+    description: 'Next-gen noise canceling with QN3 HD chip, 7x faster ANC, foldable design, and 30-hour battery.',
+    price: 449.00,
+    image: 'https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=300&h=300&fit=crop&q=80',
+    colors: ['Midnight Black', 'Platinum Silver'],
+    category: 'Audio',
+    rating: 4.9,
+    reviews: 2847,
+    inStock: true,
+    featured: true
+  },
+  {
+    id: '6',
+    name: 'Apple AirPods Pro (2nd generation)',
+    description: 'Active Noise Cancellation, Adaptive Transparency, and Personalized Spatial Audio with MagSafe charging.',
+    price: 229.00,
+    originalPrice: 249.00,
+    image: 'https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=300&h=300&fit=crop&q=80',
+    colors: ['White'],
+    category: 'Audio',
+    rating: 4.7,
+    reviews: 24891,
+    inStock: true,
+    featured: false
+  },
+  {
+    id: '7',
+    name: 'Google Pixel 8 Pro',
+    description: 'AI-powered photography, Magic Eraser, 6.7" LTPO OLED display, and 7 years of OS updates.',
+    price: 899.00,
+    originalPrice: 999.00,
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=300&fit=crop&q=80',
+    colors: ['Obsidian', 'Porcelain', 'Bay'],
+    category: 'Electronics',
+    rating: 4.6,
+    reviews: 7234,
+    inStock: true,
+    featured: false
+  },
+  {
+    id: '8',
+    name: 'Apple Watch Series 10',
+    description: 'Thinnest Apple Watch ever, larger display, faster charging, and new health features.',
+    price: 399.00,
+    image: 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=300&h=300&fit=crop&q=80',
+    colors: ['Aluminum', 'Stainless Steel', 'Titanium'],
+    category: 'Wearables',
+    rating: 4.8,
+    reviews: 11567,
+    inStock: true,
+    featured: false
+  },
+  {
+    id: '9',
+    name: 'NVIDIA RTX 4080 SUPER Graphics Card',
+    description: 'Ultimate gaming performance with DLSS 3, Ray Tracing, and AV1 encoding for 4K gaming.',
+    price: 999.00,
+    image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&h=300&fit=crop&q=80',
+    colors: ['Black'],
     category: 'Gaming',
-    rating: 4.5,
-    reviews: 678,
+    rating: 4.9,
+    reviews: 3456,
     inStock: false,
     featured: false
   },
   {
-    id: '6',
-    name: 'Wireless Charging Pad',
-    description: 'Fast wireless charging for all Qi-enabled devices with sleek aluminum design.',
-    price: 39.99,
-    originalPrice: 59.99,
-    image: 'https://via.placeholder.com/300x300.png?text=Wireless+Charger',
-    colors: ['Silver', 'Black'],
+    id: '10',
+    name: 'Razer DeathAdder V3 Pro Gaming Mouse',
+    description: 'Professional esports mouse with Focus Pro 30K sensor, 90-hour battery, and HyperSpeed wireless.',
+    price: 149.99,
+    image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300&h=300&fit=crop&q=80',
+    colors: ['Black', 'White'],
+    category: 'Gaming',
+    rating: 4.7,
+    reviews: 5678,
+    inStock: true,
+    featured: false
+  },
+  {
+    id: '11',
+    name: 'Anker PowerCore 10000 Portable Charger',
+    description: 'Ultra-compact power bank with PowerIQ and VoltageBoost technology for optimized charging.',
+    price: 24.99,
+    originalPrice: 35.99,
+    image: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=300&h=300&fit=crop&q=80',
+    colors: ['Black', 'White', 'Blue'],
     category: 'Accessories',
-    rating: 4.4,
-    reviews: 324,
+    rating: 4.5,
+    reviews: 18765,
+    inStock: true,
+    featured: false
+  },
+  {
+    id: '12',
+    name: 'Samsung Galaxy Buds3 Pro',
+    description: 'Premium earbuds with Adaptive ANC, 360 Audio, and seamless Galaxy device integration.',
+    price: 199.99,
+    originalPrice: 249.99,
+    image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop&q=80',
+    colors: ['Silver', 'White'],
+    category: 'Audio',
+    rating: 4.6,
+    reviews: 6789,
     inStock: true,
     featured: false
   }
 ]
 
-const categories = ['All', 'Audio', 'Wearables', 'Furniture', 'Electronics', 'Gaming', 'Accessories']
+const categories = ['All', 'Audio', 'Wearables', 'Electronics', 'Gaming', 'Accessories']
 
 export default function WebAppsPage() {
   const [products, setProducts] = useState<Product[]>(allProducts)
@@ -207,14 +289,14 @@ export default function WebAppsPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-extrabold tracking-tight text-yellow-300">
-              ElectroShop
+              TechHub Pro
             </h1>
             
             {/* Search Bar */}
             <div className="flex-1 max-w-md mx-8">
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="Search electronics..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-yellow-300"
@@ -363,7 +445,8 @@ export default function WebAppsPage() {
       )}
 
       <footer className="text-center py-10 border-t border-sky-600/50 text-sky-300">
-        <p>&copy; {new Date().getFullYear()} ElectroShop. Your trusted tech store.</p>
+        <p>&copy; {new Date().getFullYear()} TechHub Pro. Your trusted premium electronics retailer.</p>
+        <p className="text-sm mt-2 text-sky-400">Free shipping on orders over $50 • 30-day returns • 1-year warranty</p>
       </footer>
     </div>
   )

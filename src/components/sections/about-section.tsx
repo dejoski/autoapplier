@@ -69,9 +69,9 @@ export function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <motion.div
             custom={0.1}
-            initial="hidden"
-            whileInView="visible"
-            variants={itemVariants}
+            initial="hidden" 
+            whileInView="visible" 
+            variants={itemVariants} 
             viewport={{ once: true, amount: 0.3 }}
           >
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
@@ -90,8 +90,8 @@ export function AboutSection() {
                 From concept to deployment, I enjoy the entire development lifecycle and take pride in 
                 writing maintainable, scalable code that stands the test of time.
               </p>
-            </div>
-          </motion.div>
+                    </div>
+              </motion.div>
 
           <motion.div
             custom={0.2}
@@ -106,11 +106,11 @@ export function AboutSection() {
                 <CardHeader className="pb-3">
                   <skill.icon className={`h-8 w-8 ${skill.color} mb-2`} />
                   <CardTitle className="text-lg text-foreground">{skill.title}</CardTitle>
-                </CardHeader>
+              </CardHeader>
                 <CardContent className="pt-0">
                   <p className="text-sm text-muted-foreground">{skill.description}</p>
-                </CardContent>
-              </Card>
+              </CardContent>
+            </Card>
             ))}
           </motion.div>
         </div>

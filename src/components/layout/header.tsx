@@ -25,37 +25,38 @@ const projects = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
   const [currentHash, setCurrentHash] = React.useState('')
+  const [isMounted, setIsMounted] = React.useState(false)
   const pathname = usePathname()
 
-  // Track hash changes on client side only
   React.useEffect(() => {
+    setIsMounted(true)
     const updateHash = () => {
       setCurrentHash(window.location.hash)
     }
     
-    // Set initial hash
     updateHash()
-    
-    // Listen for hash changes
     window.addEventListener('hashchange', updateHash)
-    
     return () => {
       window.removeEventListener('hashchange', updateHash)
     }
   }, [])
 
   const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === href
+    if (!isMounted) {
+      return false; // All links are inactive on SSR and initial client render
     }
-    // For hash links, check if the pathname (without hash) is '/' and the hash matches
+
+    // Client-side only logic for active state:
+    if (href === '/') {
+      return pathname === href && (currentHash === '' || currentHash === href ); // Simplified root check with hash
+    }
     if (href.startsWith('#')) {
       return pathname === '/' && currentHash === href;
     }
-    return pathname.startsWith(href)
+    // For page links (like /debugdaily, /ai-tools, /index-v2.html)
+    return pathname.startsWith(href);
   }
 
-  // Effect to close mobile menu on route change if needed, though individual clicks handle it too
   React.useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);

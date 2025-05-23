@@ -1,14 +1,11 @@
 'use client'
 
-import * as React from 'react'
-import { useState } from 'react'
-import Image from 'next/image'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ExternalLink, Github, Briefcase, Play, Image as ImageIcon } from 'lucide-react'
+import { ExternalLink, Github } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
 
 const projects = [
   {
@@ -59,12 +56,11 @@ const projects = [
 ]
 
 export function ProjectsSection() {
-  const [showLivePreviews, setShowLivePreviews] = useState(true)
   const [loadedIframes, setLoadedIframes] = useState<Set<string>>(new Set())
   const [isMounted, setIsMounted] = useState(false)
 
   // Ensure we only render iframes on the client side
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMounted(true)
   }, [])
 
@@ -103,36 +99,7 @@ export function ProjectsSection() {
             A selection of my work demonstrating practical application of modern technologies to solve real-world challenges and deliver value.
           </p>
           
-          {/* Live Preview Toggle */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="text-sm text-muted-foreground">Preview Mode:</span>
-            <div className="flex items-center gap-2 bg-secondary/50 rounded-lg p-1">
-              <button
-                onClick={() => setShowLivePreviews(false)}
-                className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all",
-                  !showLivePreviews 
-                    ? "bg-primary text-primary-foreground shadow-sm" 
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                <ImageIcon className="h-4 w-4" />
-                Images
-              </button>
-              <button
-                onClick={() => setShowLivePreviews(true)}
-                className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all",
-                  showLivePreviews 
-                    ? "bg-primary text-primary-foreground shadow-sm" 
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                <Play className="h-4 w-4" />
-                Live Apps
-              </button>
-            </div>
-          </div>
+          {/* Live Preview Toggle - REMOVED */}
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -148,53 +115,33 @@ export function ProjectsSection() {
               <Card className="h-full bg-card shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border-border group">
                 <CardHeader className="p-0">
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-secondary">
-                    {showLivePreviews && isMounted ? (
-                      <>
-                        {/* Loading indicator */}
-                        {!loadedIframes.has(project.id) && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-secondary z-10">
-                            <div className="flex flex-col items-center gap-2">
-                              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                              <span className="text-sm text-muted-foreground">Loading live app...</span>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* Live iframe preview */}
-                        <iframe
-                          src={project.iframeUrl}
-                          className="w-full h-full border-0 scale-75 origin-top-left"
-                          style={{ 
-                            width: '133.33%', 
-                            height: '133.33%',
-                            pointerEvents: 'none' // Prevent interaction in preview
-                          }}
-                          onLoad={() => handleIframeLoad(project.id)}
-                          title={`${project.title} Preview`}
-                        />
-                        
-                        {/* Overlay for interaction */}
-                        <div className="absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <div className="bg-black/80 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                            Click to interact with live app
+                    {/* Always render iframe container, but disable/hide on server */}
+                    <>
+                      {/* Loading indicator - shown when not mounted or iframe not loaded */}
+                      {(!isMounted || !loadedIframes.has(project.id)) && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-secondary z-10">
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                            <span className="text-sm text-muted-foreground">
+                              {!isMounted ? 'Preparing app...' : 'Loading live app...'}
+                            </span>
                           </div>
                         </div>
-                      </>
-                    ) : (
-                      // Fallback to image or placeholder
-                      project.image ? (
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-secondary flex items-center justify-center">
-                          <Briefcase className="h-16 w-16 text-muted-foreground/50" />
-                        </div>
-                      )
-                    )}
+                      )}
+                      
+                      {/* Live iframe preview - always render but hide until mounted */}
+                      <iframe
+                        src={isMounted ? project.iframeUrl : 'about:blank'}
+                        className="w-full h-full border-0 scale-75 origin-top-left"
+                        style={{ 
+                          width: '133.33%', 
+                          height: '133.33%',
+                          opacity: isMounted ? 1 : 0
+                        }}
+                        onLoad={() => isMounted && handleIframeLoad(project.id)}
+                        title={`${project.title} Preview`}
+                      />
+                    </>
                   </div>
                 </CardHeader>
                 <CardContent className="p-5 md:p-6 flex flex-col flex-grow">
@@ -234,7 +181,7 @@ export function ProjectsSection() {
                     <Button asChild size="sm" className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="h-4 w-4 mr-1.5" />
-                        {showLivePreviews ? 'Open Full App' : 'Live Demo'}
+                        Open Full App
                       </a>
                     </Button>
                     <Button asChild variant="outline" size="sm" className="flex-1 border-primary/50 text-primary hover:bg-primary/5">
@@ -262,11 +209,9 @@ export function ProjectsSection() {
             <Button variant="outline" size="lg" className="border-primary/60 text-primary hover:bg-primary/5 hover:text-primary font-semibold shadow-sm">
               View More on GitHub <Github className="h-4 w-4 ml-2" />
             </Button>
-            {showLivePreviews && (
-              <p className="text-sm text-muted-foreground">
-                ✨ You're viewing live, interactive previews of real applications
-              </p>
-            )}
+            <p className="text-sm text-muted-foreground">
+              ✨ You're viewing live, interactive previews of real applications
+            </p>
           </div>
         </motion.div>
       </div>

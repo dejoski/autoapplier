@@ -39,7 +39,75 @@ export function ContactSection() {
   }
 
   if (!mounted) {
-    return <section id="contact" className="py-20 md:py-28 bg-background min-h-[80vh]"></section>;
+    return (
+      <section id="contact" className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Let's Get In Touch
+            </h2>
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+              Have a project idea, a question, or just want to connect? I'm here to listen and explore how we can create something remarkable together.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-10 md:gap-12">
+            {/* Contact Info Card - Static content */}
+            <Card className="h-full bg-card shadow-xl border-border overflow-hidden">
+              <CardHeader>
+                <CardTitle className="text-xl text-foreground">Contact Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <p className="text-muted-foreground text-sm">
+                  Feel free to reach out through any of the channels below. I typically respond within 24-48 hours.
+                </p>
+                <div className="space-y-5">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 flex-shrink-0">
+                      <Mail className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Email</p>
+                      <a href="mailto:hello@dejanstajic.dev" className="text-sm text-muted-foreground hover:text-accent transition-colors break-all">hello@dejanstajic.dev</a>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Contact Form Card - Simplified for SSR */}
+            <Card className="bg-card shadow-xl border-border overflow-hidden">
+              <CardHeader>
+                <CardTitle className="text-xl text-foreground">Send Me a Message</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-5 opacity-50">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-foreground">Full Name</label>
+                      <div className="h-10 bg-muted rounded-md"></div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-foreground">Email Address</label>
+                      <div className="h-10 bg-muted rounded-md"></div>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-foreground">Subject</label>
+                    <div className="h-10 bg-muted rounded-md"></div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-foreground">Your Message</label>
+                    <div className="h-32 bg-muted rounded-md"></div>
+                  </div>
+                  <div className="h-10 bg-muted rounded-md"></div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    );
   }
   
   const sectionVariants = {
@@ -169,7 +237,7 @@ export function ContactSection() {
                 <CardTitle className="text-xl text-foreground">Send Me a Message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-5" suppressHydrationWarning>
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
                       <label htmlFor="name" className="text-sm font-medium text-foreground">
@@ -183,7 +251,6 @@ export function ContactSection() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="e.g., Jane Doe"
-                        suppressHydrationWarning
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -198,7 +265,6 @@ export function ContactSection() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="you@example.com"
-                        suppressHydrationWarning
                       />
                     </div>
                   </div>
@@ -215,7 +281,6 @@ export function ContactSection() {
                       value={formData.subject}
                       onChange={handleChange}
                       placeholder="Project Inquiry, Collaboration, etc."
-                      suppressHydrationWarning
                     />
                   </div>
 
@@ -231,7 +296,6 @@ export function ContactSection() {
                       onChange={handleChange}
                       placeholder="Tell me more about your project or query..."
                       rows={5}
-                      suppressHydrationWarning
                     />
                   </div>
                   <div className="pt-1">
