@@ -206,6 +206,7 @@ export default function AiToolsPage() {
   const [tone, setTone] = useState<string>('neutral')
   const [output, setOutput] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [copySuccess, setCopySuccess] = useState<string>('')
   const [generationHistory, setGenerationHistory] = useState<Array<{
     type: string
     prompt: string
@@ -249,13 +250,15 @@ export default function AiToolsPage() {
   }
 
   const copyToClipboard = async () => {
-    if (output) {
+    if (output && output !== '🤖 AI is crafting your content...' && output !== '⚠️ Please enter a topic or prompt to generate content.') {
       try {
         await navigator.clipboard.writeText(output)
-        // Could add a toast notification here
-        console.log('Content copied to clipboard!')
+        setCopySuccess('Copied!')
+        setTimeout(() => setCopySuccess(''), 2000)
       } catch (err) {
         console.error('Failed to copy content:', err)
+        setCopySuccess('Failed!')
+        setTimeout(() => setCopySuccess(''), 2000)
       }
     }
   }
@@ -268,29 +271,31 @@ export default function AiToolsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-4 sm:p-8">
-      <header className="mb-12 text-center">
-        <h1 className="text-5xl font-bold text-purple-400">AI Content Generation Suite</h1>
-        <p className="text-xl text-slate-400 mt-2">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-sky-100 text-slate-800 p-4 sm:p-8 font-sans">
+      <header className="mb-12 text-center opacity-0 animate-fadeIn">
+        <h1 className="text-6xl font-bold text-sky-600 drop-shadow-sm">
+          AI Content Generation Suite
+        </h1>
+        <p className="text-xl text-slate-600 mt-3">
           Craft compelling content with the power of Artificial Intelligence.
         </p>
-        <div className="mt-4 flex justify-center items-center space-x-4">
-          <span className="bg-purple-600 px-3 py-1 rounded-full text-sm">
+        <div className="mt-6 flex justify-center items-center space-x-4">
+          <span className="bg-sky-500/20 text-sky-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm">
             ✨ {generationHistory.length} Generated
           </span>
-          <span className="bg-indigo-600 px-3 py-1 rounded-full text-sm">
-            🚀 Powered by AI
+          <span className="bg-emerald-500/20 text-emerald-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm">
+            🚀 Powered by Advanced AI
           </span>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto grid gap-8 lg:grid-cols-3">
+      <div className="max-w-7xl mx-auto grid gap-10 lg:grid-cols-3">
         {/* Input Section */}
-        <div className="lg:col-span-2">
-          <main className="bg-slate-800 p-6 sm:p-8 rounded-xl shadow-2xl">
+        <div className="lg:col-span-2 opacity-0 animate-fadeIn animation-delay-200">
+          <main className="bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-xl shadow-xl border border-slate-200">
             <section className="space-y-8">
               <div>
-                <label htmlFor="contentType" className="block text-lg font-medium text-purple-300 mb-3">
+                <label htmlFor="contentType" className="block text-lg font-semibold text-sky-700 mb-4">
                   1. Choose Content Type:
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -298,21 +303,21 @@ export default function AiToolsPage() {
                     <button
                       key={template.type}
                       onClick={() => setContentType(template.type)}
-                      className={`p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                      className={`p-4 rounded-lg border-2 transition-all duration-200 text-left shadow-sm hover:shadow-md flex flex-col items-center justify-center aspect-square focus:outline-none focus:ring-2 focus:ring-sky-500/50 ${
                         contentType === template.type
-                          ? 'border-purple-500 bg-purple-500/20 text-purple-300'
-                          : 'border-slate-600 bg-slate-700 text-gray-300 hover:border-purple-400'
+                          ? 'border-sky-500 bg-sky-500/10 text-sky-700'
+                          : 'border-slate-300 bg-slate-50 text-slate-600 hover:border-sky-400 hover:bg-sky-500/5'
                       }`}
                     >
-                      <div className="text-2xl mb-1">{template.icon}</div>
-                      <div className="text-sm font-medium">{template.label}</div>
+                      <div className="text-3xl mb-2">{template.icon}</div>
+                      <div className="text-sm font-semibold text-center">{template.label}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label htmlFor="prompt" className="block text-lg font-medium text-purple-300 mb-2">
+                <label htmlFor="prompt" className="block text-lg font-semibold text-sky-700 mb-2">
                   2. Enter Your Topic or Content:
                 </label>
                 <textarea
@@ -320,20 +325,20 @@ export default function AiToolsPage() {
                   rows={5}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  className="w-full p-3 bg-slate-700 text-gray-100 rounded-md border border-slate-600 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 placeholder-slate-500"
+                  className="w-full p-3 bg-white border border-slate-300 text-slate-700 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder-slate-400 shadow-sm text-base"
                   placeholder={`e.g., ${contentType === 'summary' ? 'Paste text to summarize...' : 'Benefits of learning a new language'}`}
                 />
               </div>
               
               <div>
-                <label htmlFor="tone" className="block text-sm font-medium text-purple-300 mb-2">
+                <label htmlFor="tone" className="block text-sm font-semibold text-sky-700 mb-2">
                   3. Select Tone of Voice:
                 </label>
                 <select
                   id="tone"
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
-                  className="w-full p-3 bg-slate-700 text-gray-100 rounded-md border border-slate-600 focus:ring-2 focus:ring-purple-500 text-sm"
+                  className="w-full p-3 bg-white border border-slate-300 text-slate-700 rounded-md focus:ring-2 focus:ring-sky-500 text-base shadow-sm"
                 >
                   {toneOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -343,18 +348,26 @@ export default function AiToolsPage() {
                 </select>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-4 pt-4 border-t border-slate-200 mt-6">
                 <button 
                   onClick={generateContent}
                   disabled={isLoading}
-                  className="flex-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out transform hover:scale-105 disabled:transform-none text-lg"
+                  className="flex-1 bg-sky-600 hover:bg-sky-700 disabled:bg-slate-400 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out transform hover:scale-105 disabled:transform-none text-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
                 >
-                  {isLoading ? '🤖 Generating...' : `Generate ${selectedTemplate?.icon} Content`}
+                  {isLoading ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Generating...
+                    </span>
+                  ) : `Generate ${selectedTemplate?.icon} Content`}
                 </button>
                 {output && (
                   <button 
                     onClick={clearOutput}
-                    className="bg-slate-600 hover:bg-slate-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150"
+                    className="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
                   >
                     Clear
                   </button>
@@ -365,28 +378,33 @@ export default function AiToolsPage() {
         </div>
 
         {/* History Sidebar */}
-        <div className="lg:col-span-1">
-          <div className="bg-slate-800 p-6 rounded-xl shadow-2xl">
-            <h3 className="text-xl font-semibold text-purple-300 mb-4">Recent Generations</h3>
+        <div className="lg:col-span-1 opacity-0 animate-fadeIn animation-delay-400">
+          <div className="bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-xl border border-slate-200 sticky top-8">
+            <h3 className="text-xl font-semibold text-sky-700 mb-5 border-b border-slate-200 pb-3">
+              Recent Generations
+            </h3>
             {generationHistory.length === 0 ? (
-              <p className="text-slate-400 text-sm">No content generated yet.</p>
+              <p className="text-slate-500 text-sm text-center py-4">No content generated yet.</p>
             ) : (
               <div className="space-y-3">
                 {generationHistory.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => loadFromHistory(item)}
-                    className="w-full text-left p-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors"
+                    className="w-full text-left p-4 bg-slate-50 hover:bg-sky-500/10 rounded-lg transition-colors shadow-sm hover:shadow-md border border-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
                   >
-                    <div className="text-sm font-medium text-purple-300">
-                      {contentTemplates.find(t => t.type === item.type)?.label}
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-md font-semibold text-sky-600">
+                        {contentTemplates.find(t => t.type === item.type)?.icon}{' '}
+                        {contentTemplates.find(t => t.type === item.type)?.label}
+                      </span>
+                      <span className="text-xs text-slate-400">
+                        {item.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
                     </div>
-                    <div className="text-xs text-slate-400 truncate">
-                      {item.prompt.substring(0, 50)}...
-                    </div>
-                    <div className="text-xs text-slate-500 mt-1">
-                      {item.timestamp.toLocaleTimeString()}
-                    </div>
+                    <p className="text-sm text-slate-600 truncate">
+                      {item.prompt.substring(0, 60)}{item.prompt.length > 60 && '...'}
+                    </p>
                   </button>
                 ))}
               </div>
@@ -397,28 +415,44 @@ export default function AiToolsPage() {
 
       {/* Output Section */}
       {output && (
-        <section className="max-w-7xl mx-auto mt-8">
-          <div className="bg-slate-800 p-6 sm:p-8 rounded-xl shadow-2xl">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-semibold text-purple-300">
-                Generated Output:
+        <section className="max-w-7xl mx-auto mt-10 opacity-0 animate-fadeInUp animation-delay-600">
+          <div className="bg-white/70 backdrop-blur-md p-6 sm:p-8 rounded-xl shadow-2xl border border-slate-200">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-200">
+              <h2 className="text-3xl font-semibold text-sky-700">
+                Voilà! Your Content:
               </h2>
               <button
                 onClick={copyToClipboard}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 shadow-md hover:shadow-lg flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-offset-2 ${copySuccess === 'Copied!' ? 'bg-green-500 hover:bg-green-600 focus:ring-green-500' : copySuccess === 'Failed!' ? 'bg-red-500 hover:bg-red-600 focus:ring-red-500' : 'bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-500'} text-white`}
               >
-                📋 Copy
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M8 2a1 1 0 00-1 1v1H5a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1h-2V3a1 1 0 00-1-1H8zM7 4h6v1H7V4zm5 5H8v1h4V9zm-4 2h4v1H8v-1z" />
+                </svg>
+                <span>{copySuccess || 'Copy to Clipboard'}</span>
               </button>
             </div>
-            <div className="min-h-[200px] p-4 bg-slate-900/70 text-gray-200 rounded-md border border-slate-600 whitespace-pre-wrap leading-relaxed prose prose-invert prose-sm sm:prose-base max-w-none">
-              {output}
+            <div className="min-h-[250px] p-5 bg-slate-50 text-slate-700 rounded-md border border-slate-200 whitespace-pre-wrap leading-relaxed prose prose-sm sm:prose-base max-w-none shadow-inner">
+              {output === '🤖 AI is crafting your content...' || output === '⚠️ Please enter a topic or prompt to generate content.' ? (
+                <div className="flex flex-col items-center justify-center h-full text-slate-500">
+                  {output === '🤖 AI is crafting your content...' && (
+                    <svg className="animate-spin h-10 w-10 text-sky-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  )}
+                  <p className="text-lg">{output}</p>
+                </div>
+              ) : (
+                output
+              )}
             </div>
           </div>
         </section>
       )}
 
-      <footer className="text-center mt-16 text-slate-500">
-        <p>&copy; {new Date().getFullYear()} AI Content Suite. Powered by Innovation.</p>
+      <footer className="text-center mt-20 text-slate-600 text-sm opacity-0 animate-fadeIn animation-delay-800">
+        <p>&copy; {new Date().getFullYear()} AI Content Generation Suite. Crafted with ❤️ and AI.</p>
+        <p className="mt-1">A Portfolio Project by Dejan Stajic - Aiming to Impress!</p>
       </footer>
     </div>
   )
