@@ -7,6 +7,7 @@ import { Menu, X, Code2, ExternalLink, Github, BookOpen } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -76,67 +77,73 @@ export function Header() {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={cn(
-                'text-sm font-medium transition-all duration-200 hover:text-accent relative group flex items-center gap-1.5',
-                isActive(item.href)
-                  ? 'text-accent'
-                  : 'text-muted-foreground'
-              )}
-            >
-              {item.icon && <item.icon className="w-4 h-4" />}
-              {item.name}
-              <span className={cn(
-                'absolute -bottom-0.5 left-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300',
-                isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
-              )} />
-            </Link>
-          ))}
-          
-          {/* Projects Dropdown */}
-          <div className="relative group">
-            <button className="text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-accent flex items-center space-x-1">
-              <span>More</span> 
-              <ExternalLink className="h-3 w-3" />
-            </button>
-            <div className="absolute top-full right-0 mt-2 w-64 rounded-xl bg-background border border-border p-2 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-10">
-              {projects.map((project) => (
-                <Link
-                  key={project.name}
-                  href={project.href}
-                  className="block rounded-md px-4 py-3 text-sm hover:bg-secondary transition-colors duration-200 group/item"
-                >
-                  <div className="font-medium text-foreground group-hover/item:text-accent transition-colors">
-                    {project.name}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-0.5">
-                    {project.description}
-                  </div>
-                </Link>
-              ))}
+        {/* Desktop Navigation & Theme Toggle */}
+        <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+          <nav className="flex items-center space-x-6 lg:space-x-8">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  'text-sm font-medium transition-all duration-200 hover:text-accent relative group flex items-center gap-1.5',
+                  isActive(item.href)
+                    ? 'text-accent'
+                    : 'text-muted-foreground'
+                )}
+              >
+                {item.icon && <item.icon className="w-4 h-4" />}
+                {item.name}
+                <span className={cn(
+                  'absolute -bottom-0.5 left-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300',
+                  isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                )} />
+              </Link>
+            ))}
+            
+            {/* Projects Dropdown */}
+            <div className="relative group">
+              <button className="text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-accent flex items-center space-x-1">
+                <span>More</span> 
+                <ExternalLink className="h-3 w-3" />
+              </button>
+              <div className="absolute top-full right-0 mt-2 w-64 rounded-xl bg-background border border-border p-2 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-10">
+                {projects.map((project) => (
+                  <Link
+                    key={project.name}
+                    href={project.href}
+                    className="block rounded-md px-4 py-3 text-sm hover:bg-secondary transition-colors duration-200 group/item"
+                  >
+                    <div className="font-medium text-foreground group-hover/item:text-accent transition-colors">
+                      {project.name}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-0.5">
+                      {project.description}
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </nav>
+          </nav>
+          <ThemeToggle />
+        </div>
 
-        {/* Mobile menu button */}
-        <Button
-          variant="outline"
-          size="icon"
-          className="md:hidden w-9 h-9 bg-background hover:bg-secondary text-muted-foreground border-border/80"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </Button>
+        {/* Mobile menu button & Theme Toggle */}
+        <div className="md:hidden flex items-center space-x-2">
+          <ThemeToggle />
+          <Button
+            variant="outline"
+            size="icon"
+            className="w-9 h-9 bg-background hover:bg-secondary text-muted-foreground border-border/80"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}

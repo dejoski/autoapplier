@@ -5,42 +5,69 @@
 @layer base {
   :root {
     --background: 0 0% 100%; /* White */
-    --foreground: 210 25% 15%; /* Dark Desaturated Blue for text */
+    --foreground: 224 71.4% 4.1%; /* Dark Blue - Main Text */
 
     --card: 0 0% 100%; /* White */
-    --card-foreground: 210 25% 15%; /* Dark Desaturated Blue for text */
+    --card-foreground: 224 71.4% 4.1%; /* Dark Blue */
 
     --popover: 0 0% 100%; /* White */
-    --popover-foreground: 210 25% 15%; /* Dark Desaturated Blue for text */
+    --popover-foreground: 224 71.4% 4.1%; /* Dark Blue */
 
-    --primary: 210 30% 25%; /* Deep Desaturated Blue - Primary elements */
-    --primary-foreground: 0 0% 98%; /* Light Gray/White for text on primary */
+    --primary: 218 81.2% 60.4%; /* Vivid Blue - Primary Action */
+    --primary-foreground: 0 0% 100%; /* White - Text on Primary */
 
-    --secondary: 210 20% 96%; /* Light Grayish Blue - Secondary elements/backgrounds */
-    --secondary-foreground: 210 30% 25%; /* Deep Desaturated Blue for text on secondary */
+    --secondary: 220 14.3% 95.9%; /* Light Gray - Secondary Background */
+    --secondary-foreground: 224 71.4% 4.1%; /* Dark Blue - Text on Secondary */
 
-    --muted: 210 15% 85%; /* Lighter Grayish Blue for muted text/borders */
-    --muted-foreground: 210 15% 45%; /* Medium Grayish Blue for muted foreground text */
+    --muted: 220 14.3% 95.9%; /* Light Gray */
+    --muted-foreground: 220 8.9% 43.1%; /* Medium Gray - Muted Text */
 
-    --accent: 180 70% 50%; /* Vibrant Teal/Cyan - Accent for CTAs, highlights */
-    --accent-foreground: 210 25% 15%; /* Dark Desaturated Blue for text on accent */
+    --accent: 260 75% 50%; /* Vibrant Purple - Accent for highlights, optional */
+    --accent-foreground: 0 0% 100%; /* White - Text on Accent */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%; /* Red - Destructive Actions */
+    --destructive-foreground: 0 0% 100%; /* White */
 
-    --border: 210 20% 88%; /* Slightly lighter than muted for borders */
-    --input: 210 20% 80%; /* Border for inputs */
-    --ring: 180 70% 60%; /* Ring focus color, related to accent */
+    --border: 220 13% 91%; /* Light Gray - Borders */
+    --input: 220 13% 91%; /* Light Gray - Input Borders */
+    --ring: 218 81.2% 60.4%; /* Vivid Blue - Focus Ring */
 
     --radius: 0.5rem;
     
-    /* Beautiful gradient colors */
-    --gradient-start: 99 102 241;
-    --gradient-middle: 139 92 246;
-    --gradient-end: 236 72 153;
-    --success: 34 197 94;
-    --warning: 251 191 36;
-    --info: 59 130 246;
+    /* Gradient colors - refined for subtlety and modernity */
+    --gradient-start: 218 81% 60%; /* Vivid Blue */
+    --gradient-middle: 260 85% 65%; /* Vibrant Purple */
+    --gradient-end: 300 90% 60%; /* Magenta/Pinkish */
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%; /* Very Dark Blue - Background */
+    --foreground: 210 20% 98%; /* Off-White - Main Text */
+
+    --card: 224 71.4% 6.1%; /* Darker Blue - Card Background */
+    --card-foreground: 210 20% 98%; /* Off-White */
+
+    --popover: 224 71.4% 6.1%; /* Darker Blue */
+    --popover-foreground: 210 20% 98%; /* Off-White */
+
+    --primary: 218 81.2% 60.4%; /* Vivid Blue - Primary Action (can remain bright) */
+    --primary-foreground: 224 71.4% 4.1%; /* Dark Blue - Text on Primary */
+
+    --secondary: 224 71.4% 10.1%; /* Dark Slate Blue - Secondary Background */
+    --secondary-foreground: 210 20% 98%; /* Off-White */
+
+    --muted: 224 71.4% 10.1%; /* Dark Slate Blue */
+    --muted-foreground: 210 20% 75%; /* Lighter Gray - Muted Text */
+
+    --accent: 260 75% 65%; /* Brighter Purple for Dark Mode */
+    --accent-foreground: 224 71.4% 4.1%; /* Dark Blue */
+
+    --destructive: 0 72.2% 50.6%; /* Darker Red */
+    --destructive-foreground: 0 0% 100%; /* White */
+
+    --border: 224 71.4% 15.1%; /* Medium Dark Blue - Borders */
+    --input: 224 71.4% 15.1%; /* Medium Dark Blue - Input Borders */
+    --ring: 218 81.2% 60.4%; /* Vivid Blue - Focus Ring */
   }
 }
 
@@ -155,6 +182,12 @@
     50% {
       background-position: 100% 50%;
     }
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
   }
   
   /* Text utilities */

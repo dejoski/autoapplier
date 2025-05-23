@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { CalendarDays, Clock, ExternalLink } from 'lucide-react'
+import { CalendarDays, Clock, ExternalLink, ChevronRight } from 'lucide-react'
 
 interface BlogPost {
   id: string
@@ -63,45 +63,53 @@ export function BlogSection() {
   const featuredPosts = blogPosts.filter(post => post.featured)
   const regularPosts = blogPosts.filter(post => !post.featured)
 
+  const PostCard = ({ post, isFeatured }: { post: BlogPost, isFeatured?: boolean }) => (
+    <Card key={post.id} className="group flex flex-col h-full bg-card hover:shadow-xl transition-shadow duration-300 border border-border hover:border-primary/30">
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+          <CalendarDays className="w-3.5 h-3.5" />
+          <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+          <Clock className="w-3.5 h-3.5 ml-1" />
+          <span>{post.readTime}</span>
+        </div>
+        <CardTitle className={`text-lg font-semibold group-hover:text-primary transition-colors duration-300 ${isFeatured ? 'md:text-xl' : ''}`}>
+          <a href="#" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+            {post.title}
+          </a>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <p className={`text-sm text-muted-foreground mb-4 ${isFeatured ? 'line-clamp-3' : 'line-clamp-2'}`}>
+          {post.excerpt}
+        </p>
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {post.tags.map((tag) => (
+            <Badge key={tag} variant="secondary" className="text-xs font-medium">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </CardContent>
+      <div className="p-6 pt-0 mt-auto">
+        <a href="#" className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all duration-300 group-hover:underline">
+          Read More
+          <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+        </a>
+      </div>
+    </Card>
+  )
+
   return (
-    <div className="space-y-12">
+    <div className="space-y-16">
       {/* Featured Posts */}
       {featuredPosts.length > 0 && (
         <section>
-          <h2 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white">
+          <h2 className="text-3xl font-bold mb-8 text-foreground">
             Featured Articles
           </h2>
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-6 md:gap-8 md:grid-cols-1 lg:grid-cols-2">
             {featuredPosts.map((post) => (
-              <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 hover:border-blue-500/50">
-                <CardHeader>
-                  <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
-                    <CalendarDays className="w-4 h-4" />
-                    <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                    <Clock className="w-4 h-4 ml-2" />
-                    <span>{post.readTime}</span>
-                  </div>
-                  <CardTitle className="text-xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {post.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <button className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:gap-3 transition-all duration-200 font-medium">
-                    Read More
-                    <ExternalLink className="w-4 h-4" />
-                  </button>
-                </CardContent>
-              </Card>
+              <PostCard post={post} key={post.id} isFeatured />
             ))}
           </div>
         </section>
@@ -109,62 +117,30 @@ export function BlogSection() {
 
       {/* Regular Posts */}
       <section>
-        <h2 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white">
-          Recent Articles
+        <h2 className="text-3xl font-bold mb-8 text-foreground">
+          All Articles
         </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {regularPosts.map((post) => (
-            <Card key={post.id} className="group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-              <CardHeader>
-                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
-                  <CalendarDays className="w-4 h-4" />
-                  <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                </div>
-                <CardTitle className="text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {post.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 text-sm">
-                  {post.excerpt}
-                </p>
-                <div className="flex flex-wrap gap-1 mb-4">
-                  {post.tags.slice(0, 2).map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                  {post.tags.length > 2 && (
-                    <Badge variant="secondary" className="text-xs">
-                      +{post.tags.length - 2}
-                    </Badge>
-                  )}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {post.readTime}
-                  </span>
-                  <button className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
-                    Read →
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
+            <PostCard post={post} key={post.id} />
           ))}
         </div>
       </section>
 
       {/* Call to Action */}
-      <section className="text-center py-12 px-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-2xl">
-        <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-          Want to Stay Updated?
+      <section className="text-center py-12 px-6 bg-secondary/50 rounded-xl">
+        <h3 className="text-2xl font-bold mb-3 text-foreground">
+          Stay Updated
         </h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
-          Get notified when I publish new articles about web development, AI, and technology.
+        <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+          Subscribe to get notified about new articles on web development, AI, and tech trends.
         </p>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-          Subscribe to Newsletter
-        </button>
+        <div className="flex justify-center">
+          <input type="email" placeholder="Enter your email" className="px-4 py-2.5 rounded-l-md border border-border focus:ring-2 focus:ring-primary focus:outline-none w-full max-w-xs bg-background" />
+          <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 rounded-r-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background">
+            Subscribe
+          </button>
+        </div>
       </section>
     </div>
   )
