@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Code2, ExternalLink, Github, BookOpen } from 'lucide-react'
+import { Menu, X, Code2, ExternalLink } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -14,8 +14,6 @@ const navigation = [
   { name: 'About', href: '#about' },
   { name: 'Projects', href: '#projects' },
   { name: 'Experience', href: '#experience' },
-  { name: 'Blog', href: '/blog', icon: BookOpen },
-  { name: 'GitHub', href: '/github', icon: Github },
   { name: 'Contact', href: '#contact' },
 ]
 
@@ -91,7 +89,6 @@ export function Header() {
                     : 'text-muted-foreground'
                 )}
               >
-                {item.icon && <item.icon className="w-4 h-4" />}
                 {item.name}
                 <span className={cn(
                   'absolute -bottom-0.5 left-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300',
@@ -162,7 +159,6 @@ export function Header() {
                 )}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {item.icon && <item.icon className="w-4 h-4" />}
                 {item.name}
               </Link>
             ))}
