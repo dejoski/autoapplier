@@ -22,7 +22,7 @@
     --muted: 220 14.3% 95.9%; /* Light Gray */
     --muted-foreground: 220 8.9% 43.1%; /* Medium Gray - Muted Text */
 
-    --accent: 260 75% 50%; /* Vibrant Purple - Accent for highlights, optional */
+    --accent: 260 75% 55%; /* Vibrant Purple - Accent for highlights, slightly desaturated */
     --accent-foreground: 0 0% 100%; /* White - Text on Accent */
 
     --destructive: 0 84.2% 60.2%; /* Red - Destructive Actions */
@@ -41,33 +41,35 @@
   }
 
   .dark {
-    --background: 224 71.4% 4.1%; /* Very Dark Blue - Background */
-    --foreground: 210 20% 98%; /* Off-White - Main Text */
+    --background: 222 47.4% 11.2%; /* Dark Slate Gray - Softer than pure black */
+    --foreground: 210 40% 98%;     /* Almost White - High contrast for readability */
 
-    --card: 224 71.4% 6.1%; /* Darker Blue - Card Background */
-    --card-foreground: 210 20% 98%; /* Off-White */
+    --card: 222 47.4% 14.2%;       /* Slightly Lighter Slate Gray - Card Background */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 224 71.4% 6.1%; /* Darker Blue */
-    --popover-foreground: 210 20% 98%; /* Off-White */
+    --popover: 222 47.4% 14.2%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 218 81.2% 60.4%; /* Vivid Blue - Primary Action (can remain bright) */
-    --primary-foreground: 224 71.4% 4.1%; /* Dark Blue - Text on Primary */
+    /* Primary action color can remain vibrant but ensure its usage is not overwhelming */
+    --primary: 218 71.2% 60.4%;   /* Slightly less saturated blue for dark mode */
+    --primary-foreground: 210 40% 98%; /* Ensure text on primary is light */
 
-    --secondary: 224 71.4% 10.1%; /* Dark Slate Blue - Secondary Background */
-    --secondary-foreground: 210 20% 98%; /* Off-White */
+    --secondary: 222 47.4% 18.2%;   /* Darker Slate - Secondary elements */
+    --secondary-foreground: 210 40% 96%; /* Lighter text for secondary elements */
 
-    --muted: 224 71.4% 10.1%; /* Dark Slate Blue */
-    --muted-foreground: 210 20% 75%; /* Lighter Gray - Muted Text */
+    --muted: 222 47.4% 22.2%;      /* Medium Slate - Muted backgrounds/borders */
+    --muted-foreground: 210 38% 80%;  /* Lighter Gray - Muted text */
 
-    --accent: 260 75% 65%; /* Brighter Purple for Dark Mode */
-    --accent-foreground: 224 71.4% 4.1%; /* Dark Blue */
+    /* Accent color needs to pop but not clash */
+    --accent: 260 75% 65%;        /* Brighter Purple for Dark Mode accent */
+    --accent-foreground: 210 40% 98%; /* Text on accent */
 
-    --destructive: 0 72.2% 50.6%; /* Darker Red */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive: 0 62.8% 50.6%; /* Darker Red */
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 224 71.4% 15.1%; /* Medium Dark Blue - Borders */
-    --input: 224 71.4% 15.1%; /* Medium Dark Blue - Input Borders */
-    --ring: 218 81.2% 60.4%; /* Vivid Blue - Focus Ring */
+    --border: 222 47.4% 22.2%;      /* Medium Slate - Borders */
+    --input: 222 47.4% 18.2%;       /* Darker Slate - Input Backgrounds */
+    --ring: 218 71.2% 65.4%;     /* Brighter Blue for focus ring */
   }
 }
 
