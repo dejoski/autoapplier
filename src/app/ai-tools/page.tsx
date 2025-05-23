@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import ThemeToggleButton from '@/components/ui/ThemeToggleButton'
 
 interface ContentTemplate {
   type: string
@@ -202,7 +203,7 @@ What's your experience with ${topic}? Drop a comment below! 👇
 
 export default function AiToolsPage() {
   const [contentType, setContentType] = useState<string>('blog')
-  const [prompt, setPrompt] = useState<string>('')
+  const [promptText, setPromptText] = useState<string>('')
   const [tone, setTone] = useState<string>('neutral')
   const [output, setOutput] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -218,7 +219,7 @@ export default function AiToolsPage() {
   const selectedTemplate = contentTemplates.find(t => t.type === contentType)
 
   const generateContent = async () => {
-    if (!prompt.trim()) {
+    if (!promptText.trim()) {
       setOutput('⚠️ Please enter a topic or prompt to generate content.')
       return
     }
@@ -228,13 +229,13 @@ export default function AiToolsPage() {
 
     // Simulate API call delay
     setTimeout(() => {
-      const generatedContent = generateMockContent(contentType, prompt, tone)
+      const generatedContent = generateMockContent(contentType, promptText, tone)
       setOutput(generatedContent)
       
       // Add to history
       const newEntry = {
         type: contentType,
-        prompt,
+        prompt: promptText,
         tone,
         output: generatedContent,
         timestamp: new Date()
@@ -265,25 +266,28 @@ export default function AiToolsPage() {
 
   const loadFromHistory = (historyItem: typeof generationHistory[0]) => {
     setContentType(historyItem.type)
-    setPrompt(historyItem.prompt)
+    setPromptText(historyItem.prompt)
     setTone(historyItem.tone)
     setOutput(historyItem.output)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-sky-100 text-slate-800 p-4 sm:p-8 font-sans">
-      <header className="mb-12 text-center opacity-0 animate-fadeIn">
-        <h1 className="text-6xl font-bold text-sky-600 drop-shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-sky-100 dark:from-slate-900 dark:to-sky-900 text-slate-800 dark:text-slate-200 p-4 sm:p-8 font-sans transition-colors duration-300">
+      <header className="mb-12 text-center opacity-0 animate-fadeIn relative">
+        <div className="absolute top-0 right-0 p-2 sm:p-0">
+            <ThemeToggleButton />
+        </div>
+        <h1 className="text-5xl sm:text-6xl font-bold text-sky-600 dark:text-sky-400 drop-shadow-sm pt-12 sm:pt-0">
           AI Content Generation Suite
         </h1>
-        <p className="text-xl text-slate-600 mt-3">
+        <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 mt-3">
           Craft compelling content with the power of Artificial Intelligence.
         </p>
         <div className="mt-6 flex justify-center items-center space-x-4">
-          <span className="bg-sky-500/20 text-sky-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm">
+          <span className="bg-sky-500/20 text-sky-700 dark:bg-sky-400/20 dark:text-sky-300 px-4 py-2 rounded-lg text-sm font-medium shadow-sm">
             ✨ {generationHistory.length} Generated
           </span>
-          <span className="bg-emerald-500/20 text-emerald-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm">
+          <span className="bg-emerald-500/20 text-emerald-700 dark:bg-emerald-400/20 dark:text-emerald-300 px-4 py-2 rounded-lg text-sm font-medium shadow-sm">
             🚀 Powered by Advanced AI
           </span>
         </div>
@@ -292,10 +296,10 @@ export default function AiToolsPage() {
       <div className="max-w-7xl mx-auto grid gap-10 lg:grid-cols-3">
         {/* Input Section */}
         <div className="lg:col-span-2 opacity-0 animate-fadeIn animation-delay-200">
-          <main className="bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-xl shadow-xl border border-slate-200">
+          <main className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-6 sm:p-8 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700">
             <section className="space-y-8">
               <div>
-                <label htmlFor="contentType" className="block text-lg font-semibold text-sky-700 mb-4">
+                <label htmlFor="contentType" className="block text-lg font-semibold text-sky-700 dark:text-sky-400 mb-4">
                   1. Choose Content Type:
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -303,10 +307,10 @@ export default function AiToolsPage() {
                     <button
                       key={template.type}
                       onClick={() => setContentType(template.type)}
-                      className={`p-4 rounded-lg border-2 transition-all duration-200 text-left shadow-sm hover:shadow-md flex flex-col items-center justify-center aspect-square focus:outline-none focus:ring-2 focus:ring-sky-500/50 ${
+                      className={`p-4 rounded-lg border-2 transition-all duration-200 text-left shadow-sm hover:shadow-md flex flex-col items-center justify-center aspect-square focus:outline-none focus:ring-2 focus:ring-sky-500/50 dark:focus:ring-sky-400/50 ${
                         contentType === template.type
-                          ? 'border-sky-500 bg-sky-500/10 text-sky-700'
-                          : 'border-slate-300 bg-slate-50 text-slate-600 hover:border-sky-400 hover:bg-sky-500/5'
+                          ? 'border-sky-500 bg-sky-500/10 text-sky-700 dark:border-sky-400 dark:bg-sky-400/10 dark:text-sky-300'
+                          : 'border-slate-300 bg-slate-50 text-slate-600 hover:border-sky-400 hover:bg-sky-500/5 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:border-sky-500 dark:hover:bg-sky-400/5'
                       }`}
                     >
                       <div className="text-3xl mb-2">{template.icon}</div>
@@ -317,42 +321,42 @@ export default function AiToolsPage() {
               </div>
 
               <div>
-                <label htmlFor="prompt" className="block text-lg font-semibold text-sky-700 mb-2">
+                <label htmlFor="promptText" className="block text-lg font-semibold text-sky-700 dark:text-sky-400 mb-2">
                   2. Enter Your Topic or Content:
                 </label>
                 <textarea
-                  id="prompt"
+                  id="promptText"
                   rows={5}
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  className="w-full p-3 bg-white border border-slate-300 text-slate-700 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder-slate-400 shadow-sm text-base"
+                  value={promptText}
+                  onChange={(e) => setPromptText(e.target.value)}
+                  className="w-full p-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 rounded-md focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-400 focus:border-sky-500 dark:focus:border-sky-400 placeholder-slate-400 dark:placeholder-slate-500 shadow-sm text-base"
                   placeholder={`e.g., ${contentType === 'summary' ? 'Paste text to summarize...' : 'Benefits of learning a new language'}`}
                 />
               </div>
               
               <div>
-                <label htmlFor="tone" className="block text-sm font-semibold text-sky-700 mb-2">
+                <label htmlFor="tone" className="block text-sm font-semibold text-sky-700 dark:text-sky-400 mb-2">
                   3. Select Tone of Voice:
                 </label>
                 <select
                   id="tone"
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
-                  className="w-full p-3 bg-white border border-slate-300 text-slate-700 rounded-md focus:ring-2 focus:ring-sky-500 text-base shadow-sm"
+                  className="w-full p-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 rounded-md focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-400 text-base shadow-sm"
                 >
                   {toneOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option key={option.value} value={option.value} className="dark:bg-slate-700 dark:text-slate-200">
                       {option.label}
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="flex gap-4 pt-4 border-t border-slate-200 mt-6">
+              <div className="flex gap-4 pt-4 border-t border-slate-200 dark:border-slate-700 mt-6">
                 <button 
                   onClick={generateContent}
                   disabled={isLoading}
-                  className="flex-1 bg-sky-600 hover:bg-sky-700 disabled:bg-slate-400 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out transform hover:scale-105 disabled:transform-none text-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+                  className="flex-1 bg-sky-600 hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-600 disabled:bg-slate-400 dark:disabled:bg-slate-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out transform hover:scale-105 disabled:transform-none text-lg focus:outline-none focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
@@ -367,7 +371,7 @@ export default function AiToolsPage() {
                 {output && (
                   <button 
                     onClick={clearOutput}
-                    className="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                    className="bg-slate-200 hover:bg-slate-300 dark:bg-slate-600 dark:hover:bg-slate-500 text-slate-700 dark:text-slate-200 font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-150 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-slate-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                   >
                     Clear
                   </button>
@@ -379,30 +383,30 @@ export default function AiToolsPage() {
 
         {/* History Sidebar */}
         <div className="lg:col-span-1 opacity-0 animate-fadeIn animation-delay-400">
-          <div className="bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-xl border border-slate-200 sticky top-8">
-            <h3 className="text-xl font-semibold text-sky-700 mb-5 border-b border-slate-200 pb-3">
+          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-6 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 sticky top-8">
+            <h3 className="text-xl font-semibold text-sky-700 dark:text-sky-400 mb-5 border-b border-slate-200 dark:border-slate-700 pb-3">
               Recent Generations
             </h3>
             {generationHistory.length === 0 ? (
-              <p className="text-slate-500 text-sm text-center py-4">No content generated yet.</p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm text-center py-4">No content generated yet.</p>
             ) : (
               <div className="space-y-3">
                 {generationHistory.map((item, index) => (
                   <button
                     key={index}
                     onClick={() => loadFromHistory(item)}
-                    className="w-full text-left p-4 bg-slate-50 hover:bg-sky-500/10 rounded-lg transition-colors shadow-sm hover:shadow-md border border-slate-200 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                    className="w-full text-left p-4 bg-slate-50 hover:bg-sky-500/10 dark:bg-slate-700 dark:hover:bg-sky-400/10 rounded-lg transition-colors shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-600 focus:outline-none focus:ring-1 focus:ring-sky-500 dark:focus:ring-sky-400"
                   >
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-md font-semibold text-sky-600">
+                      <span className="text-md font-semibold text-sky-600 dark:text-sky-400">
                         {contentTemplates.find(t => t.type === item.type)?.icon}{' '}
                         {contentTemplates.find(t => t.type === item.type)?.label}
                       </span>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-slate-400 dark:text-slate-500">
                         {item.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
-                    <p className="text-sm text-slate-600 truncate">
+                    <p className="text-sm text-slate-600 dark:text-slate-300 truncate">
                       {item.prompt.substring(0, 60)}{item.prompt.length > 60 && '...'}
                     </p>
                   </button>
@@ -416,14 +420,14 @@ export default function AiToolsPage() {
       {/* Output Section */}
       {output && (
         <section className="max-w-7xl mx-auto mt-10 opacity-0 animate-fadeInUp animation-delay-600">
-          <div className="bg-white/70 backdrop-blur-md p-6 sm:p-8 rounded-xl shadow-2xl border border-slate-200">
-            <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-200">
-              <h2 className="text-3xl font-semibold text-sky-700">
+          <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-md p-6 sm:p-8 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
+              <h2 className="text-3xl font-semibold text-sky-700 dark:text-sky-400">
                 Voilà! Your Content:
               </h2>
               <button
                 onClick={copyToClipboard}
-                className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 shadow-md hover:shadow-lg flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-offset-2 ${copySuccess === 'Copied!' ? 'bg-green-500 hover:bg-green-600 focus:ring-green-500' : copySuccess === 'Failed!' ? 'bg-red-500 hover:bg-red-600 focus:ring-red-500' : 'bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-500'} text-white`}
+                className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 shadow-md hover:shadow-lg flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900 ${copySuccess === 'Copied!' ? 'bg-green-500 hover:bg-green-600 focus:ring-green-500' : copySuccess === 'Failed!' ? 'bg-red-500 hover:bg-red-600 focus:ring-red-500' : 'bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 focus:ring-emerald-500 dark:focus:ring-emerald-400'} text-white`}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M8 2a1 1 0 00-1 1v1H5a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1h-2V3a1 1 0 00-1-1H8zM7 4h6v1H7V4zm5 5H8v1h4V9zm-4 2h4v1H8v-1z" />
@@ -431,11 +435,11 @@ export default function AiToolsPage() {
                 <span>{copySuccess || 'Copy to Clipboard'}</span>
               </button>
             </div>
-            <div className="min-h-[250px] p-5 bg-slate-50 text-slate-700 rounded-md border border-slate-200 whitespace-pre-wrap leading-relaxed prose prose-sm sm:prose-base max-w-none shadow-inner">
+            <div className="min-h-[250px] p-5 bg-slate-50 dark:bg-slate-900/50 text-slate-700 dark:text-slate-200 rounded-md border border-slate-200 dark:border-slate-700 whitespace-pre-wrap leading-relaxed prose prose-sm sm:prose-base max-w-none shadow-inner">
               {output === '🤖 AI is crafting your content...' || output === '⚠️ Please enter a topic or prompt to generate content.' ? (
-                <div className="flex flex-col items-center justify-center h-full text-slate-500">
+                <div className="flex flex-col items-center justify-center h-full text-slate-500 dark:text-slate-400">
                   {output === '🤖 AI is crafting your content...' && (
-                    <svg className="animate-spin h-10 w-10 text-sky-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-10 w-10 text-sky-500 dark:text-sky-400 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -450,7 +454,7 @@ export default function AiToolsPage() {
         </section>
       )}
 
-      <footer className="text-center mt-20 text-slate-600 text-sm opacity-0 animate-fadeIn animation-delay-800">
+      <footer className="text-center mt-20 text-slate-600 dark:text-slate-400 text-sm opacity-0 animate-fadeIn animation-delay-800">
         <p>&copy; {new Date().getFullYear()} AI Content Generation Suite. Crafted with ❤️ and AI.</p>
         <p className="mt-1">A Portfolio Project by Dejan Stajic - Aiming to Impress!</p>
       </footer>
