@@ -3,23 +3,23 @@
 import React from 'react';
 
 // Placeholder category data
-const categories = [
+const categories: Category[] = [
   {
     id: 'electronics',
     name: 'Electronics',
-    imageUrl: 'https://via.placeholder.com/400x300.png?text=Electronics',
+    imageUrl: 'https://picsum.photos/seed/electronics/400/300',
     href: '/category/electronics',
   },
   {
     id: 'apparel',
     name: 'Apparel',
-    imageUrl: 'https://via.placeholder.com/400x300.png?text=Apparel',
+    imageUrl: 'https://picsum.photos/seed/apparel/400/300',
     href: '/category/apparel',
   },
   {
     id: 'home-goods',
     name: 'Home Goods',
-    imageUrl: 'https://via.placeholder.com/400x300.png?text=Home+Goods',
+    imageUrl: 'https://picsum.photos/seed/homegoods/400/300',
     href: '/category/home-goods',
   },
 ];
@@ -49,10 +49,10 @@ export const ProductCategoriesSection = () => {
             <a
               key={category.id}
               href={category.href}
-              className="relative block overflow-hidden bg-gray-100 border border-gray-200 rounded-lg group aspect-w-16 aspect-h-9"
+              className="relative block overflow-hidden bg-gray-100 border border-gray-200 rounded-lg group aspect-w-16 aspect-h-9 transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105"
             >
               <img
-                className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
+                className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-110"
                 src={category.imageUrl}
                 alt={category.name}
               />

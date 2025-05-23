@@ -16,28 +16,28 @@ const featuredProducts: Product[] = [
     id: '1',
     name: 'Stylish Smartwatch',
     price: '$299.99',
-    imageUrl: 'https://via.placeholder.com/300x300.png?text=Smartwatch',
+    imageUrl: 'https://picsum.photos/seed/smartwatch/400/300',
     description: 'Stay connected and track your fitness with this sleek smartwatch.'
   },
   {
     id: '2',
     name: 'Wireless Noise-Cancelling Headphones',
     price: '$199.99',
-    imageUrl: 'https://via.placeholder.com/300x300.png?text=Headphones',
+    imageUrl: 'https://picsum.photos/seed/headphones/400/300',
     description: 'Immerse yourself in sound with these comfortable headphones.'
   },
   {
     id: '3',
     name: 'Ultra HD 4K Action Camera',
     price: '$249.50',
-    imageUrl: 'https://via.placeholder.com/300x300.png?text=Action+Camera',
+    imageUrl: 'https://picsum.photos/seed/actioncam/400/300',
     description: 'Capture your adventures in stunning 4K resolution.'
   },
   {
     id: '4',
     name: 'Portable Bluetooth Speaker',
     price: '$79.00',
-    imageUrl: 'https://via.placeholder.com/300x300.png?text=Bluetooth+Speaker',
+    imageUrl: 'https://picsum.photos/seed/speaker/400/300',
     description: 'Take your music anywhere with this compact and powerful speaker.'
   },
 ];
@@ -59,11 +59,11 @@ export const FeaturedProductsSection = () => {
           {featuredProducts.map((product) => (
             <div
               key={product.id}
-              className="relative overflow-hidden bg-white border border-gray-200 rounded-lg group"
+              className="relative overflow-hidden bg-white border border-gray-200 rounded-lg group transition-all duration-300 ease-in-out hover:shadow-xl hover:scale-105"
             >
-              <div className="aspect-w-3 aspect-h-4">
+              <div className="aspect-w-3 aspect-h-4 overflow-hidden">
                 <img
-                  className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
+                  className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-110"
                   src={product.imageUrl}
                   alt={product.name}
                 />

@@ -3,27 +3,27 @@
 import React from 'react';
 
 // Placeholder testimonial data
-const testimonials = [
+const testimonials: Testimonial[] = [
   {
     id: '1',
     quote: "This is the best e-commerce platform I've ever used! The products are high quality and the customer service is excellent.",
     author: 'Jane Doe',
     location: 'New York, NY',
-    avatarUrl: 'https://via.placeholder.com/100x100.png?text=JD',
+    avatarUrl: 'https://picsum.photos/seed/jane/100/100',
   },
   {
     id: '2',
     quote: 'I love the variety of products available. Shipping was fast and the items arrived in perfect condition. Highly recommend!',
     author: 'John Smith',
     location: 'San Francisco, CA',
-    avatarUrl: 'https://via.placeholder.com/100x100.png?text=JS',
+    avatarUrl: 'https://picsum.photos/seed/john/100/100',
   },
   {
     id: '3',
     quote: "Amazing experience from start to finish. The website is easy to navigate and the checkout process was a breeze. Five stars!",
     author: 'Alice Brown',
     location: 'Chicago, IL',
-    avatarUrl: 'https://via.placeholder.com/100x100.png?text=AB',
+    avatarUrl: 'https://picsum.photos/seed/alice/100/100',
   },
 ];
 

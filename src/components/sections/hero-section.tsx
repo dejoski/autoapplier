@@ -2,8 +2,9 @@
 
 import * as React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail, Download, Briefcase } from 'lucide-react'
+import { ArrowRight, ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -14,38 +15,16 @@ export function HeroSection() {
     setMounted(true)
   }, [])
 
-  // Placeholder for when not mounted to prevent layout shifts and maintain structure
+  // Basic skeleton loader for when not mounted
   if (!mounted) {
     return (
-      <section className="min-h-screen flex items-center justify-center bg-background text-foreground">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <div className="text-center space-y-8 opacity-0">
-            <div className="flex justify-center">
-              <div className="w-32 h-32 rounded-full bg-secondary p-1">
-                <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                  <div className="w-[120px] h-[120px] rounded-full bg-muted"></div>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-6">
-              <div className="h-16 bg-muted rounded w-3/4 mx-auto"></div> 
-              <div className="h-8 bg-muted rounded w-full mx-auto"></div>
-              <div className="h-8 bg-muted rounded w-5/6 mx-auto"></div>
-            </div>
-            <div className="flex flex-wrap justify-center gap-3">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="px-4 py-2 bg-secondary rounded-full w-20 h-8"></div>
-              ))}
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <div className="h-12 bg-accent rounded-lg w-48"></div>
-              <div className="h-12 bg-secondary rounded-lg w-48"></div>
-            </div>
-            <div className="flex justify-center gap-4 pt-2">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="w-10 h-10 bg-secondary rounded-full"></div>
-              ))}
-            </div>
+      <section className="relative flex items-center justify-center min-h-[70vh] md:min-h-screen bg-gray-100 dark:bg-gray-800 py-12 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center">
+          <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4"></div>
+          <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto mb-6"></div>
+          <div className="flex justify-center gap-4">
+            <div className="h-12 bg-gray-400 dark:bg-gray-600 rounded-md w-40"></div>
+            <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded-md w-40"></div>
           </div>
         </div>
       </section>
@@ -53,147 +32,101 @@ export function HeroSection() {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-background text-foreground relative overflow-hidden py-16 md:py-24">
-      {/* Subtle Background Gradient Animation */}
-      <div className="absolute inset-0 -z-10 opacity-50">
+    <section className="relative bg-gradient-to-br from-slate-50 via-stone-50 to-gray-100 dark:from-slate-900 dark:via-stone-800 dark:to-gray-900 text-foreground min-h-[70vh] md:min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-24">
+      {/* Optional: Abstract background shapes for visual interest */}
+      <div className="absolute inset-0 -z-10 opacity-30 dark:opacity-20">
         <motion.div 
-          className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary/30 to-background"
+          className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl"
           animate={{ 
-            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] 
+            scale: [1, 1.1, 1],
+            x: [0, 20, 0],
+            y: [0, -20, 0],
           }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          style={{ backgroundSize: '200% 200%' }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1, 1.05, 1],
+            x: [0, -20, 0],
+            y: [0, 20, 0],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
         />
       </div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
-        <div className="text-center space-y-10 md:space-y-12">
-          {/* Profile Image - Refined Look */}
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.7, ease: [0.6, -0.05, 0.01, 0.99] }}
-            className="flex justify-center"
-          >
-            <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary via-accent to-secondary rounded-full blur-md opacity-50 group-hover:opacity-75 group-hover:blur-lg transition duration-500" />
-              <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full bg-background p-1 shadow-xl">
-                <Image
-                  src="/profile pic.png"
-                  alt="Dejan Stajic - Full Stack Developer & AI Enthusiast"
-                  width={144}
-                  height={144}
-                  className="rounded-full object-cover aspect-square"
-                  priority
-                />
-              </div>
-            </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.99] }}
-            className="space-y-4 md:space-y-6"
-          >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight tracking-tight">
-              <span className="block">Dejan Stajic</span>
-              <span className={cn(
-                "block text-transparent bg-clip-text",
-                "bg-gradient-to-r from-primary via-accent to-primary", // Adjusted gradient for better harmony
-                "dark:from-primary dark:via-accent dark:to-primary"
-              )} style={{backgroundSize: '200% auto', animation: 'gradientMove 4s ease-in-out infinite'}}>
-                Full Stack & AI Developer
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Crafting intelligent, high-performance web applications. Specializing in Next.js, Python, and cutting-edge AI to transform complex challenges into elegant solutions.
-            </p>
-          </motion.div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="space-y-6 md:space-y-8"
+        >
+          <ShoppingBag className="w-16 h-16 md:w-20 md:h-20 text-primary mx-auto" />
+          
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
+            <span className="block">Discover Your Next</span>
+            <span className={cn(
+              "block text-transparent bg-clip-text",
+              "bg-gradient-to-r from-primary via-accent to-rose-500",
+              "dark:from-primary dark:via-accent dark:to-rose-400"
+            )} style={{backgroundSize: '200% auto', animation: 'gradientMove 6s ease-in-out infinite'}}>
+              Favorite Thing
+            </span>
+          </h1>
+          
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+            Explore our curated collection of high-quality products, designed to bring joy and style into your life. Unbeatable prices, exceptional service.
+          </p>
+        </motion.div>
 
-          {/* Tech Stack - More Subtle Presentation */}
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.4, ease: [0.6, -0.05, 0.01, 0.99] }}
-            className="flex flex-wrap justify-center gap-2 sm:gap-3"
-          >
-            {['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'AI/ML'].map((skill) => (
-              <motion.span 
-                key={skill} 
-                whileHover={{ y: -3 }}
-                className="px-4 py-2 bg-secondary text-secondary-foreground rounded-full text-xs sm:text-sm font-medium shadow-sm cursor-default transition-shadow hover:shadow-md"
-              >
-                {skill}
-              </motion.span>
-            ))}
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Button asChild size="lg" className="font-semibold text-lg px-8 py-7 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto">
+            <Link href="/products">
+              Shop All Products
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="font-semibold text-lg px-8 py-7 shadow-md hover:shadow-lg transition-all duration-300 border-border hover:bg-secondary w-full sm:w-auto">
+            <Link href="/deals">
+              View Latest Deals
+            </Link>
+          </Button>
+        </motion.div>
 
-          {/* Buttons - Refined Styling */}
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4"
-          >
-            <Button asChild size="lg" className="font-semibold shadow-md hover:shadow-lg transition-shadow bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href="#projects">
-                <Briefcase className="mr-2 h-5 w-5" />
-                View Projects
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="font-semibold shadow-sm hover:shadow-md transition-shadow border-primary/50 text-primary hover:bg-primary/5">
-              <a href="#contact">
-                <Mail className="mr-2 h-5 w-5" />
-                Get In Touch
-              </a>
-            </Button>
-          </motion.div>
-
-          {/* Social Links - Subtle Hover Effects */}
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.99] }}
-            className="flex justify-center gap-3 pt-2"
-          >
-            <Button asChild variant="outline" size="icon" className="rounded-full text-muted-foreground hover:text-primary hover:border-primary/70 transition-colors duration-300">
-              <a href="https://github.com/dejoski" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                <Github className="h-5 w-5" />
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="icon" className="rounded-full text-muted-foreground hover:text-primary hover:border-primary/70 transition-colors duration-300">
-              <a href="https://linkedin.com/in/dejanstajic" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </Button>
-            <Button asChild variant="outline" className="font-medium text-muted-foreground hover:text-primary hover:border-primary/70 transition-colors duration-300">
-              <a href="/Dejan_Stajic_Resume.pdf" download>
-                <Download className="mr-2 h-4 w-4" />
-                Download CV
-              </a>
-            </Button>
-          </motion.div>
-
-          {/* Scroll Indicator - Cleaner Animation */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 1, ease: [0.6, -0.05, 0.01, 0.99] }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          >
-            <a href="#about" className="flex flex-col items-center text-muted-foreground hover:text-primary transition-colors group">
-              <span className="text-xs sm:text-sm mb-1">Scroll</span>
-              <motion.div
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <ArrowDown className="h-4 w-4" />
-              </motion.div>
-            </a>
-          </motion.div>
-        </div>
+        {/* Optional: Placeholder for a lifestyle image or product collage if desired later */}
+        {/* <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="mt-12 md:mt-16"
+        >
+          <div className="relative w-full max-w-3xl mx-auto aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg shadow-xl overflow-hidden">
+            <Image 
+              src="https://via.placeholder.com/1280x720.png?text=Awesome+Products+Showcase" 
+              alt="E-commerce Products Showcase" 
+              layout="fill" 
+              objectFit="cover"
+            />
+          </div>
+        </motion.div> */}
       </div>
     </section>
   )
-} 
+}
+
+// Minimal CSS for gradient animation if not handled by Tailwind utility
+// (Tailwind handles gradient animation with animate-gradient utility typically)
+// You might need to add this to your global.css if issues with gradientMove:
+/*
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+*/ 
