@@ -1,9 +1,10 @@
 'use client'
 
 import * as React from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { ExternalLink, Github, Briefcase } from 'lucide-react'
+import { ExternalLink, Github, Briefcase, Play, Image as ImageIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -15,13 +16,14 @@ const projects = [
     title: 'DebugDaily - AI Coding Challenges',
     description: 'A platform offering daily coding problems with AI-powered hints and detailed explanations to accelerate learning and problem-solving skills.',
     image: '/projects/debugdaily.jpg',
+    iframeUrl: '/debugdaily',
     technologies: ['Next.js', 'TypeScript', 'OpenAI API', 'PostgreSQL', 'Tailwind CSS', 'Vercel'],
     githubUrl: 'https://github.com/dejanstajic/debugdaily',
     liveUrl: '/debugdaily',
     keyFeatures: [
-      'AI-generated hints & solutions',
+      'Real code execution & testing',
+      'AI-powered hints & solutions',
       'Progress tracking & streaks',
-      'Community discussions',
     ],
   },
   {
@@ -29,13 +31,14 @@ const projects = [
     title: 'AI Content Generation Suite',
     description: 'A powerful suite of AI tools for generating diverse, high-quality content including articles, summaries, and creative text formats using advanced language models.',
     image: '/projects/ai-content.jpg',
-    technologies: ['React', 'Python', 'FastAPI', 'OpenAI GPT-4', 'Docker', 'AWS'],
+    iframeUrl: '/ai-tools',
+    technologies: ['React', 'TypeScript', 'AI Integration', 'Content Generation', 'Tailwind CSS'],
     githubUrl: 'https://github.com/dejanstajic/ai-content',
     liveUrl: '/ai-tools',
     keyFeatures: [
       'Multiple content generation modes',
-      'Customizable output parameters',
-      'Scalable cloud architecture',
+      'Real-time AI content creation',
+      'Generation history & management',
     ],
   },
   {
@@ -43,18 +46,22 @@ const projects = [
     title: 'Modern E-Commerce Platform',
     description: 'A full-stack e-commerce solution featuring a sleek user interface, robust backend, secure payment integration, and comprehensive product management.',
     image: '/projects/ecommerce.jpg',
-    technologies: ['Next.js', 'Stripe API', 'MongoDB', 'Node.js', 'Tailwind CSS', 'Redux'],
+    iframeUrl: '/web-apps',
+    technologies: ['Next.js', 'React State Management', 'Shopping Cart', 'Checkout Flow', 'Tailwind CSS'],
     githubUrl: 'https://github.com/dejanstajic/ecommerce',
     liveUrl: '/web-apps',
     keyFeatures: [
-      'Secure Stripe payment gateway',
-      'Advanced product filtering & search',
-      'Admin dashboard for management',
+      'Full shopping cart functionality',
+      'Product search & filtering',
+      'Complete checkout process',
     ],
   },
 ]
 
 export function ProjectsSection() {
+  const [showLivePreviews, setShowLivePreviews] = useState(true)
+  const [loadedIframes, setLoadedIframes] = useState<Set<string>>(new Set())
+
   const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -67,6 +74,10 @@ export function ProjectsSection() {
       y: 0,
       transition: { duration: 0.5, delay },
     }),
+  }
+
+  const handleIframeLoad = (projectId: string) => {
+    setLoadedIframes(prev => new Set([...prev, projectId]))
   }
 
   return (
@@ -82,9 +93,40 @@ export function ProjectsSection() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Featured Projects
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             A selection of my work demonstrating practical application of modern technologies to solve real-world challenges and deliver value.
           </p>
+          
+          {/* Live Preview Toggle */}
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <span className="text-sm text-muted-foreground">Preview Mode:</span>
+            <div className="flex items-center gap-2 bg-secondary/50 rounded-lg p-1">
+              <button
+                onClick={() => setShowLivePreviews(false)}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all",
+                  !showLivePreviews 
+                    ? "bg-primary text-primary-foreground shadow-sm" 
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <ImageIcon className="h-4 w-4" />
+                Images
+              </button>
+              <button
+                onClick={() => setShowLivePreviews(true)}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all",
+                  showLivePreviews 
+                    ? "bg-primary text-primary-foreground shadow-sm" 
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Play className="h-4 w-4" />
+                Live Apps
+              </button>
+            </div>
+          </div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -97,20 +139,55 @@ export function ProjectsSection() {
               variants={itemVariants}
               viewport={{ once: true, amount: 0.2 }}
             >
-              <Card className="h-full bg-card shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border-border">
+              <Card className="h-full bg-card shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border-border group">
                 <CardHeader className="p-0">
-                  <div className="relative aspect-[16/10] w-full overflow-hidden">
-                    {project.image ? (
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-secondary">
+                    {showLivePreviews ? (
+                      <>
+                        {/* Loading indicator */}
+                        {!loadedIframes.has(project.id) && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-secondary z-10">
+                            <div className="flex flex-col items-center gap-2">
+                              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                              <span className="text-sm text-muted-foreground">Loading live app...</span>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Live iframe preview */}
+                        <iframe
+                          src={project.iframeUrl}
+                          className="w-full h-full border-0 scale-75 origin-top-left"
+                          style={{ 
+                            width: '133.33%', 
+                            height: '133.33%',
+                            pointerEvents: 'none' // Prevent interaction in preview
+                          }}
+                          onLoad={() => handleIframeLoad(project.id)}
+                          title={`${project.title} Preview`}
+                        />
+                        
+                        {/* Overlay for interaction */}
+                        <div className="absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <div className="bg-black/80 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            Click to interact with live app
+                          </div>
+                        </div>
+                      </>
                     ) : (
-                      <div className="w-full h-full bg-secondary flex items-center justify-center">
-                        <Briefcase className="h-16 w-16 text-muted-foreground/50" />
-                      </div>
+                      // Fallback to image or placeholder
+                      project.image ? (
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-secondary flex items-center justify-center">
+                          <Briefcase className="h-16 w-16 text-muted-foreground/50" />
+                        </div>
+                      )
                     )}
                   </div>
                 </CardHeader>
@@ -151,7 +228,7 @@ export function ProjectsSection() {
                     <Button asChild size="sm" className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="h-4 w-4 mr-1.5" />
-                        Live Demo
+                        {showLivePreviews ? 'Open Full App' : 'Live Demo'}
                       </a>
                     </Button>
                     <Button asChild variant="outline" size="sm" className="flex-1 border-primary/50 text-primary hover:bg-primary/5">
@@ -175,9 +252,16 @@ export function ProjectsSection() {
           viewport={{ once: true, amount: 0.3 }}
           className="text-center mt-16 md:mt-20"
         >
-          <Button variant="outline" size="lg" className="border-primary/60 text-primary hover:bg-primary/5 hover:text-primary font-semibold shadow-sm">
-            View More on GitHub <Github className="h-4 w-4 ml-2" />
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <Button variant="outline" size="lg" className="border-primary/60 text-primary hover:bg-primary/5 hover:text-primary font-semibold shadow-sm">
+              View More on GitHub <Github className="h-4 w-4 ml-2" />
+            </Button>
+            {showLivePreviews && (
+              <p className="text-sm text-muted-foreground">
+                ✨ You're viewing live, interactive previews of real applications
+              </p>
+            )}
+          </div>
         </motion.div>
       </div>
     </section>
