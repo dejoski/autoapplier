@@ -4,75 +4,77 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 220 15% 25%;
+    /* Light theme - Sophisticated neutral palette */
+    --background: 0 0% 100%;           /* Pure white */
+    --foreground: 240 10% 3.9%;       /* Rich charcoal */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 25%;
+    --card: 0 0% 100%;                 /* Pure white */
+    --card-foreground: 240 10% 3.9%;  /* Rich charcoal */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 25%;
+    --popover: 0 0% 100%;              /* Pure white */
+    --popover-foreground: 240 10% 3.9%; /* Rich charcoal */
 
-    --primary: 170 70% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 221 83% 53%;            /* Professional blue */
+    --primary-foreground: 0 0% 98%;    /* Off-white */
 
-    --secondary: 170 50% 75%;
-    --secondary-foreground: 170 70% 25%;
+    --secondary: 210 40% 98%;          /* Subtle blue-gray */
+    --secondary-foreground: 222 84% 4.9%; /* Deep blue-gray */
 
-    --muted: 210 30% 90%;
-    --muted-foreground: 210 20% 55%;
+    --muted: 210 40% 98%;              /* Light neutral */
+    --muted-foreground: 215 16% 47%;   /* Medium gray */
 
-    --accent: 30 100% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 262 83% 58%;             /* Elegant purple accent */
+    --accent-foreground: 0 0% 98%;     /* Off-white */
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;          /* Clean red */
+    --destructive-foreground: 0 0% 98%; /* Off-white */
 
-    --border: 210 30% 85%;
-    --input: 210 30% 88%;
-    --ring: 170 70% 45%;
+    --border: 214 32% 91%;             /* Subtle border */
+    --input: 214 32% 91%;              /* Input border */
+    --ring: 221 83% 53%;               /* Focus ring */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     
-    /* Gradient colors - DebugDaily theme */
-    --gradient-start: 170 70% 45%; /* Primary Teal */
-    --gradient-middle: 30 100% 55%; /* Accent Orange */
-    --gradient-end: 30 100% 65%; /* Lighter Accent Orange */
+    /* Sophisticated gradient palette */
+    --gradient-start: 221 83% 53%;     /* Professional blue */
+    --gradient-middle: 262 83% 58%;    /* Elegant purple */
+    --gradient-end: 300 76% 72%;       /* Soft lavender */
   }
 
   .dark {
-    --background: 220 25% 10%;
-    --foreground: 210 30% 88%;
+    /* Dark theme - Premium dark palette */
+    --background: 222 84% 4.9%;        /* Rich dark blue */
+    --foreground: 210 40% 98%;         /* Crisp white */
 
-    --card: 220 25% 15%;
-    --card-foreground: 210 30% 88%;
+    --card: 222 84% 4.9%;              /* Rich dark blue */
+    --card-foreground: 210 40% 98%;    /* Crisp white */
 
-    --popover: 220 25% 15%;
-    --popover-foreground: 210 30% 88%;
+    --popover: 222 84% 4.9%;           /* Rich dark blue */
+    --popover-foreground: 210 40% 98%; /* Crisp white */
 
-    --primary: 170 65% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 217 91% 60%;            /* Bright blue */
+    --primary-foreground: 222 84% 4.9%; /* Dark background */
 
-    --secondary: 170 45% 30%;
-    --secondary-foreground: 170 60% 80%;
+    --secondary: 217 32% 17%;          /* Dark blue-gray */
+    --secondary-foreground: 210 40% 98%; /* Crisp white */
 
-    --muted: 220 15% 25%;
-    --muted-foreground: 210 25% 70%;
+    --muted: 217 32% 17%;              /* Dark neutral */
+    --muted-foreground: 215 20% 65%;   /* Light gray */
 
-    --accent: 30 100% 60%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 263 70% 50%;             /* Rich purple accent */
+    --accent-foreground: 210 40% 98%;  /* Crisp white */
 
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;          /* Dark red */
+    --destructive-foreground: 210 40% 98%; /* Crisp white */
 
-    --border: 220 15% 20%;
-    --input: 220 15% 22%;
-    --ring: 170 65% 50%;
+    --border: 217 32% 17%;             /* Dark border */
+    --input: 217 32% 17%;              /* Dark input */
+    --ring: 217 91% 60%;               /* Bright focus ring */
 
-    /* Gradient colors - DebugDaily theme dark */
-    --gradient-start: 170 65% 50%; /* Primary Teal Dark */
-    --gradient-middle: 30 100% 60%; /* Accent Orange Dark */
-    --gradient-end: 30 100% 70%; /* Lighter Accent Orange Dark */
+    /* Premium dark gradients */
+    --gradient-start: 217 91% 60%;     /* Bright blue */
+    --gradient-middle: 263 70% 50%;    /* Rich purple */
+    --gradient-end: 300 76% 72%;       /* Soft lavender */
   }
 }
 
@@ -121,7 +123,7 @@
 }
 
 @layer utilities {
-  /* Beautiful gradient utilities */
+  /* Sophisticated gradient utilities */
   .gradient-primary {
     background: linear-gradient(135deg, hsl(var(--gradient-start)), hsl(var(--gradient-middle)), hsl(var(--gradient-end)));
   }
@@ -139,7 +141,7 @@
     border-radius: 12px;
   }
   
-  /* Glass morphism */
+  /* Premium glass morphism */
   .glass {
     backdrop-filter: blur(20px) saturate(180%);
     background-color: rgba(255, 255, 255, 0.8);
@@ -152,7 +154,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
-  /* Animation utilities */
+  /* Smooth animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
@@ -195,31 +197,31 @@
     100% { background-position: 0% center; }
   }
   
-  /* Text utilities */
+  /* Typography utilities */
   .text-balance {
     text-wrap: balance;
   }
   
-  /* Container utilities */
+  /* Layout utilities */
   .container-custom {
     @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
   }
   
-  /* Background patterns */
+  /* Subtle background patterns */
   .bg-grid {
     background-image: 
-      linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+      linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
     background-size: 50px 50px;
   }
   
   .bg-dots {
-    background-image: radial-gradient(circle, rgba(99, 102, 241, 0.15) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    background: linear-gradient(135deg, hsl(var(--gradient-start)), hsl(var(--gradient-middle)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
