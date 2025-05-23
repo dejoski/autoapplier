@@ -1,4 +1,4 @@
-import { getChallengeById, Challenge, mockChallenges } from '@/lib/mock-data';
+import { getChallengeById, mockChallenges } from '@/lib/mock-data';
 import { notFound } from 'next/navigation';
 import { Badge } from '@/components/ui/badge'; // Assuming Badge component exists or will be created
 import { ArrowLeft, Code, Brain } from 'lucide-react';

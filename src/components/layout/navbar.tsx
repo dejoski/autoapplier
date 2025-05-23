@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Code, BrainCircuit } from 'lucide-react' // Using BrainCircuit for AI/logo
+import { BrainCircuit } from 'lucide-react' // Using BrainCircuit for AI/logo
 
 export function Navbar() {
   return (
