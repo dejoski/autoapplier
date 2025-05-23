@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Code2, ExternalLink } from 'lucide-react'
+import { Menu, X, Code2, ExternalLink, Github, BookOpen } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -13,6 +13,8 @@ const navigation = [
   { name: 'About', href: '#about' },
   { name: 'Projects', href: '#projects' },
   { name: 'Experience', href: '#experience' },
+  { name: 'Blog', href: '/blog', icon: BookOpen },
+  { name: 'GitHub', href: '/github', icon: Github },
   { name: 'Contact', href: '#contact' },
 ]
 
@@ -81,12 +83,13 @@ export function Header() {
               key={item.name}
               href={item.href}
               className={cn(
-                'text-sm font-medium transition-colors duration-200 hover:text-accent relative group',
+                'text-sm font-medium transition-all duration-200 hover:text-accent relative group flex items-center gap-1.5',
                 isActive(item.href)
                   ? 'text-accent'
                   : 'text-muted-foreground'
               )}
             >
+              {item.icon && <item.icon className="w-4 h-4" />}
               {item.name}
               <span className={cn(
                 'absolute -bottom-0.5 left-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300',
@@ -145,13 +148,14 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  'block rounded-md px-3 py-3 text-base font-medium transition-colors duration-200',
+                  'flex items-center gap-2 rounded-md px-3 py-3 text-base font-medium transition-colors duration-200',
                   isActive(item.href)
                     ? 'bg-accent/10 text-accent' 
                     : 'text-muted-foreground hover:bg-secondary hover:text-primary'
                 )}
                 onClick={() => setMobileMenuOpen(false)}
               >
+                {item.icon && <item.icon className="w-4 h-4" />}
                 {item.name}
               </Link>
             ))}
