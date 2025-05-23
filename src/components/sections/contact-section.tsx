@@ -6,6 +6,8 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-rea
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 export function ContactSection() {
   const [formData, setFormData] = React.useState({
@@ -23,8 +25,10 @@ export function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
+    // TODO: Implement actual form submission logic (e.g., API call to a backend or email service)
     console.log('Form submitted:', formData)
+    // Potentially reset form: setFormData({ name: '', email: '', subject: '', message: '' })
+    // Show a success/error message to the user
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,91 +39,116 @@ export function ContactSection() {
   }
 
   if (!mounted) {
-    return <div className="h-screen" /> // Prevent hydration mismatch
+    return <section id="contact" className="py-20 md:py-28 bg-background min-h-[80vh]"></section>;
+  }
+  
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (delay = 0) => ({
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5, delay },
+    }),
+  }
+  const itemVariantsRight = {
+    hidden: { opacity: 0, x: 20 },
+    visible: (delay = 0) => ({
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5, delay },
+    }),
   }
 
   return (
-    <section id="contact" className="py-24 bg-white">
+    <section id="contact" className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          initial="hidden"
+          whileInView="visible"
+          variants={sectionVariants}
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-center mb-16 md:mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+            Let's Get In Touch
+          </h2>
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+            Have a project idea, a question, or just want to connect? I'm here to listen and explore how we can create something remarkable together.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Info */}
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-12">
+          {/* Contact Info Card */}
           <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="space-y-8"
+            custom={0.1}
+            initial="hidden"
+            whileInView="visible"
+            variants={itemVariants}
+            viewport={{ once: true, amount: 0.2 }}
           >
-            <Card className="border border-gray-200 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <Card className="h-full bg-card shadow-xl border-border overflow-hidden">
               <CardHeader>
-                <CardTitle className="text-gray-900">Let's Connect</CardTitle>
+                <CardTitle className="text-xl text-foreground">Contact Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <p className="text-gray-600">
-                  I'm always excited to work on new projects and collaborate with amazing people. 
-                  Whether you have a specific project in mind or just want to chat about technology, 
-                  feel free to reach out!
+                <p className="text-muted-foreground text-sm">
+                  Feel free to reach out through any of the channels below. I typically respond within 24-48 hours. For urgent matters, please indicate so in your message subject.
                 </p>
 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-                      <Mail className="h-5 w-5 text-blue-600" />
+                <div className="space-y-5">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 flex-shrink-0">
+                      <Mail className="h-5 w-5 text-accent" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">Email</p>
-                      <p className="text-sm text-gray-600">hello@dejanstajic.dev</p>
+                      <p className="font-semibold text-foreground">Email</p>
+                      <a href="mailto:hello@dejanstajic.dev" className="text-sm text-muted-foreground hover:text-accent transition-colors break-all">hello@dejanstajic.dev</a>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-                      <Phone className="h-5 w-5 text-blue-600" />
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 flex-shrink-0">
+                      <Phone className="h-5 w-5 text-accent" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">Schedule a Call</p>
-                      <p className="text-sm text-gray-600">Available for consultations</p>
+                      <p className="font-semibold text-foreground">Schedule a Call</p>
+                      <a href="#" className="text-sm text-muted-foreground hover:text-accent transition-colors">Let's find a time (Link coming soon)</a>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-                      <MapPin className="h-5 w-5 text-blue-600" />
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 flex-shrink-0">
+                      <MapPin className="h-5 w-5 text-accent" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">Location</p>
-                      <p className="text-sm text-gray-600">Available worldwide (Remote)</p>
+                      <p className="font-semibold text-foreground">Location</p>
+                      <p className="text-sm text-muted-foreground">Global (Remote First)</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-gray-200">
-                  <p className="font-medium mb-4 text-gray-900">Follow me on social media</p>
+                <div className="pt-5 border-t border-border">
+                  <p className="font-semibold mb-3 text-foreground">Connect on Social Media</p>
                   <div className="flex gap-3">
-                    <Button className="w-9 h-9 rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-50">
-                      <Github className="h-4 w-4" />
-                      <span className="sr-only">GitHub</span>
+                    <Button asChild variant="outline" size="icon" className="rounded-md border-border/80 text-muted-foreground hover:bg-secondary hover:text-primary">
+                      <a href="https://github.com/dejanstajic" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                        <Github className="h-5 w-5" />
+                      </a>
                     </Button>
-                    <Button className="w-9 h-9 rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-50">
-                      <Linkedin className="h-4 w-4" />
-                      <span className="sr-only">LinkedIn</span>
+                    <Button asChild variant="outline" size="icon" className="rounded-md border-border/80 text-muted-foreground hover:bg-secondary hover:text-primary">
+                      <a href="https://linkedin.com/in/dejanstajic" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                        <Linkedin className="h-5 w-5" />
+                      </a>
                     </Button>
-                    <Button className="w-9 h-9 rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-50">
-                      <Twitter className="h-4 w-4" />
-                      <span className="sr-only">Twitter</span>
+                    <Button asChild variant="outline" size="icon" className="rounded-md border-border/80 text-muted-foreground hover:bg-secondary hover:text-primary">
+                      <a href="https://twitter.com/dejanstajic" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter) Profile">
+                        <Twitter className="h-5 w-5" />
+                      </a>
                     </Button>
                   </div>
                 </div>
@@ -127,92 +156,90 @@ export function ContactSection() {
             </Card>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Contact Form Card */}
           <motion.div
-            initial={{ x: 20, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            viewport={{ once: true }}
+            custom={0.2}
+            initial="hidden"
+            whileInView="visible"
+            variants={itemVariantsRight}
+            viewport={{ once: true, amount: 0.2 }}
           >
-            <Card className="border border-gray-200 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <Card className="bg-card shadow-xl border-border overflow-hidden">
               <CardHeader>
-                <CardTitle className="text-gray-900">Send a Message</CardTitle>
+                <CardTitle className="text-xl text-foreground">Send Me a Message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6" suppressHydrationWarning>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-sm font-medium text-gray-900">
-                        Name
+                <form onSubmit={handleSubmit} className="space-y-5" suppressHydrationWarning>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <label htmlFor="name" className="text-sm font-medium text-foreground">
+                        Full Name
                       </label>
-                      <input
+                      <Input
                         id="name"
                         name="name"
                         type="text"
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="Your name"
+                        placeholder="e.g., Jane Doe"
                         suppressHydrationWarning
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium text-gray-900">
-                        Email
+                    <div className="space-y-1.5">
+                      <label htmlFor="email" className="text-sm font-medium text-foreground">
+                        Email Address
                       </label>
-                      <input
+                      <Input
                         id="email"
                         name="email"
                         type="email"
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="your@email.com"
+                        placeholder="you@example.com"
                         suppressHydrationWarning
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="subject" className="text-sm font-medium text-gray-900">
+                  <div className="space-y-1.5">
+                    <label htmlFor="subject" className="text-sm font-medium text-foreground">
                       Subject
                     </label>
-                    <input
+                    <Input
                       id="subject"
                       name="subject"
                       type="text"
                       required
                       value={formData.subject}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="What's this about?"
+                      placeholder="Project Inquiry, Collaboration, etc."
                       suppressHydrationWarning
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium text-gray-900">
-                      Message
+                  <div className="space-y-1.5">
+                    <label htmlFor="message" className="text-sm font-medium text-foreground">
+                      Your Message
                     </label>
-                    <textarea
+                    <Textarea
                       id="message"
                       name="message"
                       required
-                      rows={5}
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                      placeholder="Tell me about your project..."
+                      placeholder="Tell me more about your project or query..."
+                      rows={5}
                       suppressHydrationWarning
                     />
                   </div>
-
-                  <Button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 h-10 rounded-md px-8">
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
-                  </Button>
+                  <div className="pt-1">
+                    <Button type="submit" size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold shadow-md">
+                      <Send className="mr-2 h-4 w-4" />
+                      Send Message
+                    </Button>
+                  </div>
                 </form>
               </CardContent>
             </Card>
